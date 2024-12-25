@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 16:42:30 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/24 23:45:49 by oprosvir         ###   ########.fr       */
+/*   Created: 2024/12/24 22:31:22 by oprosvir          #+#    #+#             */
+/*   Updated: 2024/12/25 00:40:28 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "cub3d.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	allocation_error(t_game *cub, const char *message)
 {
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)b;
-	while (len-- > 0)
-		*ptr++ = (unsigned char)c;
-	return (b);
+	ft_putendl_fd(message, 2);
+	exit_code(cub, EXIT_FAILURE);
 }

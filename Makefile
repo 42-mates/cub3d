@@ -3,8 +3,10 @@ NAME			= cub3D
 OBJDIR			= obj/
 INCDIR			= include/
 
-SRCS			= src/main.c
-
+SRCS			= src/main.c \
+				  src/utils/error.c \
+				  src/utils/exit.c \
+				  src/utils/debug.c
 
 OBJS			= $(SRCS:src/%.c=$(OBJDIR)%.o)
 
