@@ -6,13 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 00:39:48 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/25 01:56:31 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void print_image_data(const t_image *image)
+void	print_image_data(const t_image *image)
 {
 	printf("Image Data:\n");
 	printf("  img: %p\n", image->img);
@@ -23,9 +23,10 @@ void print_image_data(const t_image *image)
 	printf("\n");
 }
 
-void print_data(const t_game *cub)
+void	print_data(const t_game *cub)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	printf("Game Data:\n");
 	printf("  mlx: %p\n", cub->mlx);
@@ -40,6 +41,6 @@ void print_data(const t_game *cub)
 		}
 	}
 	else
-		printf("    (null)\n");    
+		printf("    (null)\n");
 	print_image_data(&cub->image);
 }

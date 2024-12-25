@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 00:23:11 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/25 18:54:19 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@ void	init_window(t_game *cub, char *title)
 	if (!cub->image.img)
 		allocation_error(cub, "Error: Unable to create image");
 	cub->image.addr = mlx_get_data_addr(cub->image.img,
-										&cub->image.bits_per_pixel,
-										&cub->image.line_length,
-										&cub->image.endian);
+			&cub->image.bits_per_pixel, &cub->image.line_length,
+			&cub->image.endian);
 	if (!cub->image.addr)
 		allocation_error(cub, "Error: Unable to get image data address");
 }
 
-int main(void)
+int	main(void)
 {
-	t_game	cub;
+	t_game cub;
 
 	ft_bzero(&cub, sizeof(t_game));
 	init_window(&cub, WIN_TITLE);
 	print_data(&cub);
+	render_frame(&cub);
+	mlx_hook(cub.win, 17, 0, exit_success, &cub);
+	mlx_key_hook(cub.win, handle_keypress, &cub);
+	mlx_loop(cub.mlx);
 	return (EXIT_SUCCESS);
 }

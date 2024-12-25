@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 00:43:41 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/25 19:01:08 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "mlx.h"
 # include <math.h>
 # include <stdio.h>
+# include <X11/keysym.h>
 
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 800
@@ -41,6 +42,11 @@ typedef struct  s_game
 
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
+int				exit_success(t_game *cub);
+
+// render
+void			render_frame(t_game *game);
+int				handle_keypress(int keycode, t_game *cub);
 
 // debug
 void			print_data(const t_game *cub);
