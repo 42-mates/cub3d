@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 19:01:08 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/25 20:24:39 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
 
+typedef struct s_player
+{
+	int			pos_x;
+	int			pos_y;
+}				t_player;
+
 typedef struct s_image
 {
 	void		*img;
@@ -38,6 +44,7 @@ typedef struct  s_game
 	void		*win;
 	char		**map;
 	t_image		image;
+	t_player	player;
 }				t_game;
 
 void			allocation_error(t_game *cub, const char *message);

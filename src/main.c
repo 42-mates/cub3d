@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 18:54:19 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/25 19:59:54 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	main(void)
 	ft_bzero(&cub, sizeof(t_game));
 	init_window(&cub, WIN_TITLE);
 	print_data(&cub);
+	
+	cub.player.pos_x = WIN_WIDTH / 2;
+	cub.player.pos_y = WIN_HEIGHT / 2;
+	
 	render_frame(&cub);
 	mlx_hook(cub.win, 17, 0, exit_success, &cub);
 	mlx_key_hook(cub.win, handle_keypress, &cub);
