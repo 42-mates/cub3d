@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 01:56:31 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:00:07 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,46 @@ void	print_image_data(const t_image *image)
 	printf("\n");
 }
 
-void	print_data(const t_game *cub)
+void	print_player_data(const t_player *player)
 {
-	int	i;
+	printf("Player Data:\n");
+	printf("  pos_x: %d\n", player->pos_x);
+	printf("  pos_y: %d\n", player->pos_y);
+	printf("\n");
+}
 
-	i = 0;
-	printf("Game Data:\n");
-	printf("  mlx: %p\n", cub->mlx);
-	printf("  win: %p\n", cub->win);
-	printf("  map:\n");
-	if (cub->map)
+void print_map_data(const t_map *map)
+{
+	int i;
+
+	printf("Map Data:\n");
+	printf("  width: %d\n", map->width);
+	printf("  height: %d\n", map->height);
+	printf("  grid:\n");
+	if (map->grid)
 	{
-		while (cub->map[i])
+		for (i = 0; i < map->height; i++)
 		{
-			printf("    %s\n", cub->map[i]);
-			i++;
+			printf("    %s\n", map->grid[i]);
 		}
 	}
 	else
 		printf("    (null)\n");
+	printf("  north_texture: %s\n", map->no_texture ? map->no_texture : "(null)");
+	printf("  south_texture: %s\n", map->so_texture ? map->so_texture : "(null)");
+	printf("  west_texture: %s\n", map->we_texture ? map->we_texture : "(null)");
+	printf("  east_texture: %s\n", map->ea_texture ? map->ea_texture : "(null)");
+	printf("  floor_rgb: %d\n", map->floor_rgb);
+	printf("  ceiling_rgb: %d\n", map->ceiling_rgb);
+	printf("\n");
+}
+
+void print_data(const t_game *cub)
+{
+	printf("Game Data:\n");
+	printf("  mlx: %p\n", cub->mlx);
+	printf("  win: %p\n\n", cub->win);
 	print_image_data(&cub->image);
+	print_player_data(&cub->player);
+	print_map_data(&cub->map);
 }

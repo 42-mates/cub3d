@@ -6,6 +6,7 @@ INCDIR			= include/
 SRCS			= src/main.c \
 				  src/render/render.c \
 				  src/render/events.c \
+				  src/utils/init.c \
 				  src/utils/error.c \
 				  src/utils/exit.c \
 				  src/utils/debug.c
