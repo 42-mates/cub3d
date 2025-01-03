@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 19:44:45 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/29 20:51:46 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:15:18 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_game	init_game(void)
 	cub.map.height = -1;
 	cub.map.floor_rgb = -1;
 	cub.map.ceiling_rgb = -1;
+    cub.minimap = 1;
 	return (cub);
 }

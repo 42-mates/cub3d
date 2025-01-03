@@ -6,13 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 20:28:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:18:07 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	put_pixel(t_image *img, int x, int y, int color)
+void	put_pixel(t_image *img, int x, int y, int color)
 {
 	int	offset;
 
@@ -54,6 +54,8 @@ void	render_frame(t_game *game)
 		}
 		y++;
 	}
-	player(&game->image, game->player.pos_x, game->player.pos_y, 20, 0xFF0000);
+	if (game->minimap)
+		draw_minimap(game, 4);
+	player(&game->image, game->player.pos_x, game->player.pos_y, 8, 0xFF0000);
 	mlx_put_image_to_window(game->mlx, game->win, game->image.img, 0, 0);
 }

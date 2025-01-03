@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/29 19:59:24 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:11:56 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	int			minimap;
 	t_image		image;
 	t_player	player;
 	t_map		map;
@@ -68,6 +69,8 @@ int				exit_success(t_game *cub);
 
 // render
 void			render_frame(t_game *game);
+void			put_pixel(t_image *img, int x, int y, int color);
+void			draw_minimap(t_game *game, int map_scale);
 int				handle_keypress(int keycode, t_game *cub);
 
 // debug
