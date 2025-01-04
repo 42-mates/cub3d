@@ -30,9 +30,9 @@ GREEN			= \033[1;38;5;76m
 ROSEBUD			= \033[1;38;5;199m
 RESET			= \033[0m
 
-all:			$(LIBFT) $(MINILIBX) $(NAME)
+all:			$(NAME)
 
-$(NAME):		$(OBJS) $(LIBFT) $(MINILIBX)
+$(NAME):		$(LIBFT) $(MINILIBX) $(OBJS)
 				$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MINILIBX) -o $(NAME) $(LDFLAGS)
 
 $(OBJDIR)%.o:	src/%.c $(INCDIR)cub3d.h
@@ -59,4 +59,6 @@ fclean:			clean
 
 re: 			fclean all
 
-.PHONY: 		all clean fclean re
+bonus:			all
+
+.PHONY: 		all clean fclean re bonus
