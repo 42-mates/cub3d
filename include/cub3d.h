@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/01/03 21:11:56 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/05 17:26:05 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,24 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
+
+typedef struct		s_map_node
+{
+	char				*line;
+	struct s_map_node	*next;
+	int					width;
+} 					t_map_node;
+
+typedef struct s_temp_map
+{
+	t_map_node		*top;
+	unsigned int	height;
+}					t_temp_map;
 
 typedef struct s_map
 {
@@ -66,6 +80,12 @@ t_game			init_game(void);
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
+
+// map & config parser
+void    		extract_map(char *file_name, t_game *cub);
+void    		extract_line(char *line, t_game *cub, t_temp_map *map_list);
+void    		map_list_append(char *line, t_temp_map *map_list);
+int 			map_list_size(t_map_node *head);
 
 // render
 void			render_frame(t_game *game);
