@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/01/03 21:11:56 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:23:24 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,12 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int			pos_x;
-	int			pos_y;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
 }				t_player;
 
 typedef struct s_image
@@ -68,6 +72,7 @@ void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
 
 // render
+void    		get_player_position(t_game *game);
 void			render_frame(t_game *game);
 void			put_pixel(t_image *img, int x, int y, int color);
 void			draw_minimap(t_game *game, int map_scale);

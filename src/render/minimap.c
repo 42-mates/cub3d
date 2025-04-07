@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/01/03 21:55:26 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:35:10 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 static int	get_cell_color(t_game *game, int x, int y)
 {
 	if (game->map.grid[y][x] == '1')
-		return (0xFFFFFF);
-	return (0x000000);
+		return (0x000000);
+	return (0xFFFFFF);
 }
 
 static void	draw_minimap_cell(t_game *game, int col, int row, int cell_size)
@@ -41,15 +41,15 @@ static void	draw_minimap_cell(t_game *game, int col, int row, int cell_size)
 	}
 }
 
-static void	draw_minimap_player(t_game *game, int map_scale)
+static void	draw_minimap_player(t_game *game, int cell_size)
 {
 	int	px;
 	int	py;
 	int	i;
 	int	j;
 
-	px = game->player.pos_x / map_scale;
-	py = game->player.pos_y / map_scale;
+	px = game->player.pos_x * cell_size;
+	py = game->player.pos_y *cell_size;
 	i = -2;
 	while (i < 2)
 	{
@@ -82,5 +82,5 @@ void	draw_minimap(t_game *game, int map_scale)
 		}
 		y++;
 	}
-	draw_minimap_player(game, map_scale);
+	draw_minimap_player(game, cell_size);
 }

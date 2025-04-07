@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/01/03 21:41:20 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:41:49 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(void)
 	char *map_grid[] =
 	{
 		"11111111",
-		"10000001",
+		"10000S01",
 		"11100101",
 		"10000001",
 		"10000111",
@@ -41,10 +41,12 @@ int	main(void)
 
 	// add : check_args(argc, argv);
 	cub = init_game();
-	print_data(&cub);
+	//print_data(&cub);
 
 	init_map(&cub, map_grid);
 	// add : parser(argv[1], &cub);
+	get_player_position(&cub);
+	print_data(&cub);
 	render_frame(&cub);
 	mlx_hook(cub.win, 17, 0, exit_success, &cub);
 	mlx_key_hook(cub.win, handle_keypress, &cub);
