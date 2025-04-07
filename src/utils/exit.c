@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:56:37 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/12/25 00:38:58 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:09:19 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ void	exit_code(t_game *cub, int exit_code)
 		free(cub->mlx);
 	}
 	exit(exit_code);
+}
+
+void	exit_failure(char *msg)
+{
+	ft_putendl_fd("Error", 2);
+	ft_putendl_fd(msg, 2);
+	exit(1);
 }
 
 int	exit_success(t_game *cub)

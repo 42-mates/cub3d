@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/05 17:06:13 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:03:08 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,37 @@ void init_map(t_game *game, char **map_grid)
 	game->map.grid = map_grid;
 }
 
+void	check_args(int argc, char **argv)
+{
+	char	*s;
+	int		fd;
+
+	if (argc != 2)
+		exit_failure("Invalid number of arguments");
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0 || read(fd, NULL, 0) < 0)
+	{
+		close(fd);
+		exit_failure("File does not exist or is a directory");
+	}
+	close(fd);
+	s = ft_strchr(argv[1], '.');
+	if (s)
+	{
+		if (ft_strcmp(s, ".cub") == 0 && ft_strlen(s) == 4)
+			return ;
+	}
+	exit_failure("Invalid file format");
+}
+
 int	main(int argc, char **argv)
 {
 	t_game cub;
 	
-	// char *map_grid[] =
-	// {
-	// 	"11111111",
-	// 	"10000001",
-	// 	"11100101",
-	// 	"10000001",
-	// 	"10000111",
-	// 	"10100001",
-	// 	"10100001",
-	// 	"11111111",
-	// 	NULL
-	// };
-
-	// add : check_args(argc, argv);
-	if (argc != 2)
-	{
-		printf("Error: Invalid number of arguments\n");
-		exit(1);
-	}
+	check_args(argc, argv);
 	cub = init_game();
 	print_data(&cub);
 	extract_map(argv[1], &cub);
-	// init_map(&cub, map_grid);
 	init_map(&cub, cub.map.grid);
 	// add : parser(argv[1], &cub);
 	render_frame(&cub);

@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/05 17:26:05 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:02:39 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ typedef struct s_game
 
 // main, init & exit
 t_game			init_game(void);
+void			check_args(int argc, char **argv);;
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
+void			exit_failure(char *msg);
 
 // map & config parser
 void    		extract_map(char *file_name, t_game *cub);
