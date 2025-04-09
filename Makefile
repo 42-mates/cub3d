@@ -11,7 +11,10 @@ SRCS			= src/main.c \
 				  src/utils/error.c \
 				  src/utils/exit.c \
 				  src/utils/debug.c \
-				  src/parser/map_parser.c
+				  src/parser/map_parser.c \
+				  src/parser/map.c \
+				  src/parser/config.c \
+				  src/parser/rgb.c
 
 OBJS			= $(SRCS:src/%.c=$(OBJDIR)%.o)
 

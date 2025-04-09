@@ -6,149 +6,107 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/05 17:06:17 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:33:26 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void    convert_rgb_to_hex(char *s)
-// {
-    
-// }
-
-void	purge_gnl(int fd)
+void	check_args(int argc, char **argv)
 {
-	char	*line;
+	char	*s;
+	int		fd;
 
-	line = get_next_line(fd);
-	while (line)
+	if (argc != 2)
+		exit_failure("Invalid number of arguments");
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0 || read(fd, NULL, 0) < 0)
 	{
-		free(line);
-		line = get_next_line(fd);
+		close(fd);
+		exit_failure("File does not exist or is a directory");
 	}
+	close(fd);
+	s = ft_strchr(argv[1], '.');
+	if (s)
+	{
+		if (ft_strcmp(s, ".cub") == 0 && ft_strlen(s) == 4)
+			return ;
+	}
+	exit_failure("Invalid file format");
 }
 
-void    print_temp_list(t_temp_map *map)
+int line_is_empty(char *line)
 {
-    t_map_node  *current = map->top;
+    int i;
 
-    while (current)
+    i = 0;
+    while (line[i])
     {
-        printf("%s", current->line);
-        current = current->next;
-    }
-}
-
-void    map_list_append(char *line, t_temp_map *map_list)
-{
-    t_map_node  *current;
-    t_map_node  *new_node = malloc(sizeof(t_map_node));
-    if (!new_node)
-    {
-        printf("malloc failed\n");
-        exit(1);
-    }
-    new_node->line = ft_strdup(line);
-    new_node->next = NULL;
-    map_list->height++;
-    if (!map_list->top)
-    {
-        map_list->top = new_node;
-        return ;
-    }
-    current = map_list->top;
-    while (current->next)
-        current = current->next;
-    current->next = new_node;
-}
-
-void    extract_line(char *line, t_game *cub, t_temp_map *map_list)
-{
-    if (ft_strncmp(line, "NO ", 3) == 0)
-        cub->map.no_texture = line;
-    else if (ft_strncmp(line, "SO ", 3) == 0)
-        cub->map.so_texture = line;
-    else if (ft_strncmp(line, "WE ", 3) == 0)
-        cub->map.we_texture = line;
-    else if (ft_strncmp(line, "EA ", 3) == 0)
-        cub->map.ea_texture = line;
-    // else if (ft_strncmp(line, "F ", 2) == 0)
-    //     cub->map.floor_rgb = line;
-    // else if (ft_strncmp(line, "C ", 2) == 0)
-    //     cub->map.ceiling_rgb = line;
-    else
-    {
-        map_list_append(line, map_list);
-    }
-}
-
-t_temp_map  *create_temp_map(void)
-{
-    t_temp_map  *map;
-    
-    map = malloc(sizeof(t_temp_map));
-    if (!map)
-    {
-        printf("Error: malloc\n");
-        exit(1);
-    }
-    map->height = 0;
-    map->top = NULL;
-    return (map);
-}
-
-void    save_map_to_grid(t_temp_map *map, t_game *cub)
-{
-    t_map_node  *current = map->top;
-
-    cub->map.grid = malloc(sizeof(char*) * map->height);
-    if (!cub->map.grid)
-    {
-        printf("malloc fail\n");
-        exit(1);
-    }
-    int i = 0;
-    while (i < (int)map->height)
-    {
-        cub->map.grid[i] = ft_strdup(current->line);
-        current = current->next;
+        if (line[i] != ' ')
+            return (1);
         i++;
     }
+    return (0);
 }
 
-void    extract_map(char *file_name, t_game *cub)
+int is_map_line(char *line)
 {
-    int     fd;
-    char    *line;
-    t_temp_map  *map;
+    char    *trimmed;
+    int     is_map_line;
+
+    is_map_line = 0;
+    trimmed = ft_strtrim(line, " ");
+    if (trimmed[0] == '0' || trimmed[0] == '1')
+        is_map_line = 1;
+    free(trimmed);
+    return (is_map_line);
+}
+
+void    deallocate_linked_list(t_map_node *map_lines)
+{
+    t_map_node  *current;
+    t_map_node  *tmp;
+
+    current = map_lines;
+    while (current)
+    {
+        tmp = current;
+        current = current->next;
+        free(tmp);
+    }
+}
+
+void    parse_scene_file(char *file_name, t_game *cub)
+{
+    int         fd;
+    char        *line;
+    t_map_node  *map_lines;
     
-    map = create_temp_map();
-    // add: error handling for temp map
+    map_lines = NULL;
     fd = open(file_name, O_RDONLY);
     if (fd < 0)
-    {
-        printf("Error: failed to open file\n");
-        exit(1);
-    }
+        exit_failure("File can't be opened");
     line = get_next_line(fd);
     if (line == NULL)
     {
-        printf("Error: empty file\n");
-        exit(1);
+        close(fd);
+        exit_failure("Empty file");
     }
     while (line != NULL)
     {
-        // if (ft_strlen(line) == 1 && ft_strncmp(line, "\n", 1) == 0)
-        //     line = get_next_line(fd);
-        // else
-        // {
-            extract_line(line, cub, map);
-            line = get_next_line(fd);
-        // }
+        if (is_config_line(line))
+            parse_config(line, cub);
+        else if (is_map_line(line))
+            map_list_append(line, &map_lines);
+        else if (!line_is_empty(line))
+        {
+            // handle memory leaks
+            close(fd);
+            exit_failure("Invalid line in .cub file");
+        }
+        line = get_next_line(fd);
     }
-    printf("map height = %d\n", map->height);
-    print_temp_list(map);
-    save_map_to_grid(map, cub);
+    print_temp_list(map_lines);
+    save_map_to_grid(map_lines, cub);
     close(fd);
 }

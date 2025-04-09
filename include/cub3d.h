@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/07 20:02:39 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:28:17 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ typedef struct		s_map_node
 	int					width;
 } 					t_map_node;
 
-typedef struct s_temp_map
-{
-	t_map_node		*top;
-	unsigned int	height;
-}					t_temp_map;
+// typedef struct s_temp_map
+// {
+// 	t_map_node		*top;
+// 	unsigned int	height;
+// }					t_temp_map;
 
 typedef struct s_map
 {
@@ -84,10 +84,18 @@ int				exit_success(t_game *cub);
 void			exit_failure(char *msg);
 
 // map & config parser
-void    		extract_map(char *file_name, t_game *cub);
-void    		extract_line(char *line, t_game *cub, t_temp_map *map_list);
-void    		map_list_append(char *line, t_temp_map *map_list);
-int 			map_list_size(t_map_node *head);
+void    		parse_scene_file(char *file_name, t_game *cub);
+// void    		extract_line(char *line, t_game *cub, t_temp_map *map_list);
+void    		map_list_append(char *line, t_map_node **map_line);
+int 			is_map_line(char *line);
+int 			line_is_empty(char *line);
+int 			is_config_line(char *trimmed);
+void    		parse_config(char *line, t_game *cub);
+char    		*extract_path(char *trimmed, int i);
+void    		deallocate_linked_list(t_map_node *map_lines);
+int 			convert_rgb_to_int(int red, int green, int blue);
+int 			separate_rgb_values(char *line);
+void			save_map_to_grid(t_map_node *lines, t_game *cub);
 
 // render
 void			render_frame(t_game *game);
@@ -97,5 +105,6 @@ int				handle_keypress(int keycode, t_game *cub);
 
 // debug
 void			print_data(const t_game *cub);
+void    		print_temp_list(t_map_node *map_lines);
 
 #endif
