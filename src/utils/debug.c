@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/10 00:17:14 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:22:57 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void print_map_data(const t_map *map)
 	{
 		for (i = 0; i < map->height; i++)
 		{
-			printf("    %s\n", map->grid[i]);
+			printf("    |%s|\n", map->grid[i]);
 		}
 	}
 	else
@@ -74,7 +74,7 @@ void    print_temp_list(t_map_node *map_lines)
 	printf("----- TEMPORARY LINKED LIST -----\n");
     while (current)
     {
-        printf("%s", current->line);
+        printf("|%s|\n", current->line);
         current = current->next;
     }
 	printf("----- TEMPORARY LINKED LIST -----\n");

@@ -6,23 +6,47 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:40:13 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/10 00:43:48 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/10 22:54:01 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void    pad_lines(t_game *cub)
+{
+    int width = cub->map.width;
+    int x, y;
+
+    y = 0;
+    while (y < cub->map.height)
+    {
+        x = 0;
+        while (cub->map.grid[y][x])
+            x++;
+        while (x < width)
+        {
+            cub->map.grid[y][x] = ' ';
+            x++;
+        }
+        y++;
+    }
+}
+
 void    save_map_to_grid(t_map_node *lines, t_game *cub)
 {
     t_map_node  *current;
     int         height;
+    int         max_width;
     int         i;
     
     current = lines;
     height = 0;
+    max_width = 0;
     while (current)
     {
         height++;
+        if ((int)ft_strlen(current->line) > max_width)
+            max_width = ft_strlen(current->line);
         current = current->next;
     }
     cub->map.grid = malloc(sizeof(char*) * (height + 1));
@@ -41,28 +65,9 @@ void    save_map_to_grid(t_map_node *lines, t_game *cub)
     }
     cub->map.grid[height] = NULL;
     cub->map.height = height;
+    cub->map.width = max_width;
+    pad_lines(cub);
+    deallocate_linked_list(cub->map.temp_list);
 }
 
-void    map_list_append(char *line, t_map_node **map_line)
-{
-    t_map_node  *current;
-    t_map_node  *new_node;
-    
-    new_node = malloc(sizeof(t_map_node));
-    if (!new_node)
-    {
-        printf("malloc failed\n");
-        exit(1);
-    }
-    new_node->line = ft_strdup(line);
-    new_node->next = NULL;
-    if (*map_line == NULL)
-    {
-        *map_line = new_node;
-        return ;
-    }
-    current = *map_line;
-    while (current->next)
-        current = current->next;
-    current->next = new_node;
-}
+

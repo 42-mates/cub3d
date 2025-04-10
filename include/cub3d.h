@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/10 00:28:17 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/10 22:39:04 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,7 @@ typedef struct		s_map_node
 {
 	char				*line;
 	struct s_map_node	*next;
-	int					width;
 } 					t_map_node;
-
-// typedef struct s_temp_map
-// {
-// 	t_map_node		*top;
-// 	unsigned int	height;
-// }					t_temp_map;
 
 typedef struct s_map
 {
@@ -48,6 +41,7 @@ typedef struct s_map
 	char		*ea_texture;
 	int			floor_rgb;
 	int			ceiling_rgb;
+	t_map_node	*temp_list;
 }				t_map;
 
 typedef struct s_player
@@ -85,10 +79,14 @@ void			exit_failure(char *msg);
 
 // map & config parser
 void    		parse_scene_file(char *file_name, t_game *cub);
-// void    		extract_line(char *line, t_game *cub, t_temp_map *map_list);
-void    		map_list_append(char *line, t_map_node **map_line);
+void    		remove_newline(char *line);
+void    		map_list_append(char *line, t_map_node **head);
 int 			is_map_line(char *line);
 int 			line_is_empty(char *line);
+void			validate_map_content(t_game *cub);
+int 			validate_map_lines(t_map_node *head);
+int     		line_has_invalid_chars(char *line);
+int 			append_players(char *line);
 int 			is_config_line(char *trimmed);
 void    		parse_config(char *line, t_game *cub);
 char    		*extract_path(char *trimmed, int i);
