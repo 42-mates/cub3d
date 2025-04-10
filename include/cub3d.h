@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/07 17:23:24 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 00:19:29 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # include <stdio.h>
 
 # define WIN_TITLE "cub3D"
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1280
+# define WIN_HEIGHT 720
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.05 // radians (~2.8 degrees per frame)
 
 typedef struct s_map
 {
@@ -77,6 +79,10 @@ void			render_frame(t_game *game);
 void			put_pixel(t_image *img, int x, int y, int color);
 void			draw_minimap(t_game *game, int map_scale);
 int				handle_keypress(int keycode, t_game *cub);
+void			move_forward(t_game *game);
+void			move_backward(t_game *game);
+void			strafe_right(t_game *game);
+void			strafe_left(t_game *game);
 
 // debug
 void			print_data(const t_game *cub);

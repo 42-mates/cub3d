@@ -6,12 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:09:02 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/07 20:47:15 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 00:29:23 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// TODO : refactor to norm
 void	set_player_direction(t_game *game, char c)
 {
 	if (c == 'N')
@@ -60,11 +61,11 @@ void	get_player_position(t_game *game)
 				game->player.pos_x = j + 0.5;
 				game->player.pos_y = i + 0.5;
 				set_player_direction(game, game->map.grid[i][j]);
-				//game->map.grid[i][j] = '0'; segfault!!
+				// game->map.grid[i][j] = '0'; segfault!! (do we need to change though?)
 				return ;
 			}
-            j++;
+			j++;
 		}
 		i++;
-    }
+	}
 }

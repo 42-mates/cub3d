@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/07 22:35:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 00:34:30 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ static void	draw_minimap_cell(t_game *game, int col, int row, int cell_size)
 	}
 }
 
+static void	direction_line(t_game *game, int x, int y, int len)
+{
+	int	i;
+	int	dx;
+	int	dy;
+
+	i = 0;
+	while (i < len)
+	{
+		dx = (int)(game->player.dir_x * i);
+		dy = (int)(game->player.dir_y * i);
+		put_pixel(&game->image, x + dx, y + dy, 0xFF0000);
+		i++;
+	}
+}
+
 static void	draw_minimap_player(t_game *game, int cell_size)
 {
 	int	px;
@@ -49,21 +65,22 @@ static void	draw_minimap_player(t_game *game, int cell_size)
 	int	j;
 
 	px = game->player.pos_x * cell_size;
-	py = game->player.pos_y *cell_size;
+	py = game->player.pos_y * cell_size;
 	i = -2;
-	while (i < 2)
+	while (i <= 2)
 	{
 		j = -2;
-		while (j < 2)
+		while (j <= 2)
 		{
 			put_pixel(&game->image, px + i, py + j, 0xFF0000);
 			j++;
 		}
 		i++;
 	}
+	direction_line(game, px, py, cell_size / 2);
 }
 
-// TODO : scrollable minimap, player position
+// TODO : scrollable minimap, scale
 void	draw_minimap(t_game *game, int map_scale)
 {
 	int	cell_size;
