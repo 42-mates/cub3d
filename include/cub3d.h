@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 00:19:29 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 01:11:45 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
-# define MOVE_SPEED 0.1
-# define ROT_SPEED 0.05 // radians (~2.8 degrees per frame)
+# define MOVE_SPEED 0.02
+# define ROT_SPEED 0.025 // radians (~2.8 degrees per frame)
 
 typedef struct s_map
 {
@@ -37,6 +37,16 @@ typedef struct s_map
 	int			floor_rgb;
 	int			ceiling_rgb;
 }				t_map;
+
+typedef struct s_keys
+{
+	int			w;
+	int			a;
+	int			s;
+	int			d;
+	int			left;
+	int			right;
+}				t_keys;
 
 typedef struct s_player
 {
@@ -64,6 +74,7 @@ typedef struct s_game
 	int			minimap;
 	t_image		image;
 	t_player	player;
+	t_keys		keys;
 	t_map		map;
 }				t_game;
 
@@ -74,11 +85,13 @@ void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
 
 // render
-void    		get_player_position(t_game *game);
+void			get_player_position(t_game *game);
 void			render_frame(t_game *game);
 void			put_pixel(t_image *img, int x, int y, int color);
 void			draw_minimap(t_game *game, int map_scale);
 int				handle_keypress(int keycode, t_game *cub);
+int				handle_keyrelease(int keycode, t_game *game);
+int				game_loop(t_game *game);
 void			move_forward(t_game *game);
 void			move_backward(t_game *game);
 void			strafe_right(t_game *game);
