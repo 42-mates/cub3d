@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 00:34:30 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:37:13 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	draw_minimap_player(t_game *game, int cell_size)
 		}
 		i++;
 	}
-	direction_line(game, px, py, cell_size / 2);
+	direction_line(game, px, py, cell_size);
 }
 
 // TODO : scrollable minimap, scale

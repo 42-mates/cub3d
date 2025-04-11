@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/09 23:31:56 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:41:57 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static void	draw_background(t_game *cub)
 // NOTE : floor & ceiling hardcoded, delete after parsing
 void	render_frame(t_game *game)
 {
-	game->map.floor_rgb = 0x7be651;
-	game->map.ceiling_rgb = 0x87CEEB;
+	//game->map.floor_rgb = 0x7be651;
+	//game->map.ceiling_rgb = 0x87CEEB;
 	draw_background(game);
 	if (game->minimap)
-		draw_minimap(game, 8);
+		draw_minimap(game, 4);
 	mlx_put_image_to_window(game->mlx, game->win, game->image.img, 0, 0);
 }

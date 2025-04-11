@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 13:22:44 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:37:42 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
-# define MOVE_SPEED 0.02
-# define ROT_SPEED 0.025 // radians (~2.8 degrees per frame)
+# define MOVE_SPEED 0.01
+# define ROT_SPEED 0.01 // radians
 
 typedef struct		s_map_node
 {
