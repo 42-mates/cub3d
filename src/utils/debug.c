@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/07 17:04:32 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:24:34 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_map_data(const t_map *map)
 	{
 		for (i = 0; i < map->height; i++)
 		{
-			printf("    %s\n", map->grid[i]);
+			printf("    |%s|\n", map->grid[i]);
 		}
 	}
 	else
@@ -73,4 +73,17 @@ void	print_data(const t_game *cub)
 	print_image_data(&cub->image);
 	print_player_data(&cub->player);
 	print_map_data(&cub->map);
+}
+
+void    print_temp_list(t_map_node *map_lines)
+{
+    t_map_node  *current = map_lines;
+
+	printf("----- TEMPORARY LINKED LIST -----\n");
+    while (current)
+    {
+        printf("|%s|\n", current->line);
+        current = current->next;
+    }
+	printf("----- TEMPORARY LINKED LIST -----\n");
 }
