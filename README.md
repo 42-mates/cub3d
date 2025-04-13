@@ -11,3 +11,8 @@ Cub3D is a 42 School team project inspired by the iconic game Wolfenstein 3D. Th
 To clone this repository with its submodules (e.g. libft, minilibx):
 ```bash
 git clone --recursive git@github.com:42-mates/cub3d.git
+```
+
+If you cloned the repository **without** the `--recursive` flag:
+```bash
+git submodule update --init --recursive
