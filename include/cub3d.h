@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 19:07:54 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:59:52 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define WIN_HEIGHT 720
 # define MOVE_SPEED 0.01
 # define ROT_SPEED 0.01 // radians
+# define BLACK 0x000000
+# define WHITE 0xFFFFFF
 
 typedef struct		s_map_node
 {

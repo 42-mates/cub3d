@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 13:37:13 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:33:28 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// TODO : handle spaces in map
 static int	get_cell_color(t_game *game, int x, int y)
 {
-	if (game->map.grid[y][x] == '1')
-		return (0x000000);
-	return (0xFFFFFF);
+	char tile;
+	
+	tile = game->map.grid[y][x];	
+	if (tile == '1')
+		return (BLACK);
+	if (tile == '0')
+		return (WHITE);
+	return (-1);
 }
 
 static void	draw_minimap_cell(t_game *game, int col, int row, int cell_size)
@@ -27,6 +31,8 @@ static void	draw_minimap_cell(t_game *game, int col, int row, int cell_size)
 	int	j;
 
 	color = get_cell_color(game, col, row);
+	if (color == -1)
+		return ;
 	i = 0;
 	while (i < cell_size)
 	{

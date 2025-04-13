@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 19:12:33 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/13 20:32:26 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	init_window(t_game *cub, char *title)
 		allocation_error(cub, "Error: Unable to get image data address");
 }
 
-// NOTE : is it necessarily to change player pos to /0
 static void	get_player_position(t_game *cub)
 {
 	int	i;
@@ -70,7 +69,7 @@ static void	get_player_position(t_game *cub)
 				cub->player.pos_x = j + 0.5;
 				cub->player.pos_y = i + 0.5;
 				set_player_direction(cub, cub->map.grid[i][j]);
-				// cub->map.grid[i][j] = '0'; segfault!!
+				cub->map.grid[i][j] = '0';
 				return ;
 			}
 			j++;
