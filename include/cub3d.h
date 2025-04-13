@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 13:37:42 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:07:54 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ typedef struct s_game
 }				t_game;
 
 // main, init & exit
-t_game			init_game(void);
-void			check_args(int argc, char **argv);;
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
@@ -113,7 +111,7 @@ int 			separate_rgb_values(char *line);
 void			save_map_to_grid(t_map_node *lines, t_game *cub);
 
 // render
-void			get_player_position(t_game *game);
+void			set_player_direction(t_game *game, char c);
 void			render_frame(t_game *game);
 void			put_pixel(t_image *img, int x, int y, int color);
 void			draw_minimap(t_game *game, int map_scale);

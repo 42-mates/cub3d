@@ -9,7 +9,6 @@ SRCS			= src/main.c \
 				  src/render/minimap.c \
 				  src/render/move.c \
 				  src/render/events.c \
-				  src/utils/init.c \
 				  src/utils/error.c \
 				  src/utils/exit.c \
 				  src/utils/debug.c \
