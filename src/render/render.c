@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 19:00:15 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:45:31 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,28 @@ static void	draw_background(t_game *cub)
 	}
 }
 
-void	render_frame(t_game *game)
+static void	render_rays(t_game *cub)
 {
-	draw_background(game);
-	if (game->minimap)
-		draw_minimap(game, 4);
-	mlx_put_image_to_window(game->mlx, game->win, game->image.img, 0, 0);
+	int		x;
+	t_ray	ray;
+	double	camera_x;
+
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		camera_x = 2.0 * x / (double)WIN_WIDTH - 1.0;
+		ft_bzero(&ray, sizeof(t_ray));
+		cast_ray(cub, &ray, camera_x);
+		draw_wall_slice(cub, x, ray.wall_dist, ray.side);
+		x++;
+	}
+}
+
+void	render_frame(t_game *cub)
+{
+	draw_background(cub);
+	render_rays(cub);
+	if (cub->minimap)
+		draw_minimap(cub, 8);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->image.img, 0, 0);
 }

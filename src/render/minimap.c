@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 20:33:28 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:39:46 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	draw_minimap_player(t_game *game, int cell_size)
 		}
 		i++;
 	}
-	direction_line(game, px, py, cell_size);
+	direction_line(game, px, py, cell_size / 2);
 }
 
 // TODO : scrollable minimap, scale

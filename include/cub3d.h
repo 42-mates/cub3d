@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 19:59:52 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/15 21:12:09 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,23 @@ typedef struct s_game
 	t_map		map;
 }				t_game;
 
+typedef struct s_ray
+{
+	double		dir_x;
+	double		dir_y;
+	int			map_x;
+	int			map_y;
+	double		s_dist_x;
+	double		s_dist_y;
+	double		d_dist_x;
+	double		d_dist_y;
+	int			step_x;
+	int			step_y;
+	int			side; // 0 = X, 1 = Y
+	int			hit;
+	double		wall_dist;
+}				t_ray;
+
 // main, init & exit
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
@@ -113,17 +130,19 @@ int 			separate_rgb_values(char *line);
 void			save_map_to_grid(t_map_node *lines, t_game *cub);
 
 // render
-void			set_player_direction(t_game *game, char c);
-void			render_frame(t_game *game);
+void			set_player_direction(t_game *cub, char c);
+void			render_frame(t_game *cub);
 void			put_pixel(t_image *img, int x, int y, int color);
-void			draw_minimap(t_game *game, int map_scale);
+void			draw_minimap(t_game *cub, int map_scale);
 int				handle_keypress(int keycode, t_game *cub);
-int				handle_keyrelease(int keycode, t_game *game);
-int				game_loop(t_game *game);
-void			move_forward(t_game *game);
-void			move_backward(t_game *game);
-void			strafe_right(t_game *game);
-void			strafe_left(t_game *game);
+int				handle_keyrelease(int keycode, t_game *cub);
+int				game_loop(t_game *cub);
+void			move_forward(t_game *cub);
+void			move_backward(t_game *cub);
+void			strafe_right(t_game *cub);
+void			strafe_left(t_game *cub);
+void			cast_ray(t_game *cub, t_ray *ray, double camera_x);
+void			draw_wall_slice(t_game *cub, int x, double dist, int side);
 
 // debug
 void			print_data(const t_game *cub);
