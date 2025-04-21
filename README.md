@@ -6,6 +6,9 @@ Made by [@prosviriakova](https://github.com/prosviriakova) and [@mglikenf](https
 
 ### 📖 Description
 Cub3D is a 42 School team project inspired by the iconic game Wolfenstein 3D. The goal of this project is to implement a pseudo-3D maze renderer using ray-casting techniques in C, with the help of the miniLibX library. This project enhances understanding of graphics programming, algorithmic design, and teamwork.
+<p align="center">
+  <img src="https://github.com/42-mates/cub3D/blob/main/assets/wiki_raycasting.gif?raw=true" alt="Raycasting demo" />
+</p>
 
 ### 📦 Installation
 To clone this repository with its submodules (e.g. libft, minilibx):
