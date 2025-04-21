@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/15 21:12:09 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:26:51 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # include <fcntl.h>
 
 # define WIN_TITLE "cub3D"
-# define WIN_WIDTH 1280
-# define WIN_HEIGHT 720
-# define MOVE_SPEED 0.01
-# define ROT_SPEED 0.01 // radians
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+# define MOVE_SPEED 0.007 // 0.01 faster
+# define ROT_SPEED 0.007 // radians 0.01 faster
+# define MOUSE_SENS 0.01 // set to 0.0025 to slow down
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 
@@ -56,6 +57,8 @@ typedef struct s_keys
 	int			d;
 	int			left;
 	int			right;
+	int			m_down;
+	int			x_old;
 }				t_keys;
 
 typedef struct s_player
@@ -106,6 +109,7 @@ typedef struct s_ray
 }				t_ray;
 
 // main, init & exit
+void			init_hooks(t_game *cub);
 void			allocation_error(t_game *cub, const char *message);
 void			exit_code(t_game *cub, int exit_code);
 int				exit_success(t_game *cub);
@@ -134,9 +138,10 @@ void			set_player_direction(t_game *cub, char c);
 void			render_frame(t_game *cub);
 void			put_pixel(t_image *img, int x, int y, int color);
 void			draw_minimap(t_game *cub, int map_scale);
-int				handle_keypress(int keycode, t_game *cub);
-int				handle_keyrelease(int keycode, t_game *cub);
-int				game_loop(t_game *cub);
+int				mouse_press(int button, int x, int y, t_game *cub);
+int				mouse_release(int button, int x, int y, t_game *cub);
+int				mouse_move(int x, int y, t_game *cub);
+void			rotate(t_player *p, double angle);
 void			move_forward(t_game *cub);
 void			move_backward(t_game *cub);
 void			strafe_right(t_game *cub);

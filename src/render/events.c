@@ -6,26 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 19:00:22 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 01:32:44 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:28:52 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	rotate_player(t_player *p, double angle)
-{
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = p->dir_x;
-	old_plane_x = p->plane_x;
-	p->dir_x = p->dir_x * cos(angle) - p->dir_y * sin(angle);
-	p->dir_y = old_dir_x * sin(angle) + p->dir_y * cos(angle);
-	p->plane_x = p->plane_x * cos(angle) - p->plane_y * sin(angle);
-	p->plane_y = old_plane_x * sin(angle) + p->plane_y * cos(angle);
-}
-
-int	handle_keypress(int keycode, t_game *game)
+static int	key_press(int keycode, t_game *game)
 {
 	if (keycode == XK_Escape)
 		exit_success(game);
@@ -46,7 +33,7 @@ int	handle_keypress(int keycode, t_game *game)
 	return (0);
 }
 
-int	handle_keyrelease(int keycode, t_game *game)
+static int	key_release(int keycode, t_game *game)
 {
 	if (keycode == XK_w)
 		game->keys.w = 0;
@@ -63,7 +50,7 @@ int	handle_keyrelease(int keycode, t_game *game)
 	return (0);
 }
 
-int	game_loop(t_game *game)
+static int	game_loop(t_game *game)
 {
 	if (game->keys.w)
 		move_forward(game);
@@ -74,9 +61,20 @@ int	game_loop(t_game *game)
 	if (game->keys.d)
 		strafe_right(game);
 	if (game->keys.left)
-		rotate_player(&game->player, -ROT_SPEED);
+		rotate(&game->player, -ROT_SPEED);
 	if (game->keys.right)
-		rotate_player(&game->player, ROT_SPEED);
+		rotate(&game->player, ROT_SPEED);
 	render_frame(game);
 	return (0);
+}
+
+void	init_hooks(t_game *cub)
+{
+	mlx_hook(cub->win, 2, 1L << 0, key_press, cub);
+	mlx_hook(cub->win, 3, 1L << 1, key_release, cub);
+	mlx_hook(cub->win, 4, 1L << 2, mouse_press, cub);
+	mlx_hook(cub->win, 5, 1L << 3, mouse_release, cub);
+	mlx_hook(cub->win, 6, 1L << 6, mouse_move, cub);
+	mlx_hook(cub->win, 17, 0, exit_success, cub);
+	mlx_loop_hook(cub->mlx, game_loop, cub);
 }

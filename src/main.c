@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/13 20:32:26 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:52:30 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ int	main(int argc, char **argv)
 	get_player_position(&cub);
 	print_data(&cub);
 	render_frame(&cub);
-	mlx_hook(cub.win, 2, 1L << 0, handle_keypress, &cub);
-	mlx_hook(cub.win, 3, 1L << 1, handle_keyrelease, &cub);
-	mlx_hook(cub.win, 17, 0, exit_success, &cub);
-	mlx_loop_hook(cub.mlx, game_loop, &cub);
+	init_hooks(&cub);
 	mlx_loop(cub.mlx);
 	return (EXIT_SUCCESS);
 }

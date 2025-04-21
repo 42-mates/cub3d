@@ -10,6 +10,7 @@ SRCS			= src/main.c \
 				  src/render/player.c \
 				  src/render/minimap.c \
 				  src/render/move.c \
+				  src/render/rotate.c \
 				  src/render/events.c \
 				  src/utils/error.c \
 				  src/utils/exit.c \
