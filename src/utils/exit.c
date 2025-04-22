@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:56:37 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/09 23:22:25 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:55:51 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	exit_code(t_game *cub, int exit_code)
 	exit(exit_code);
 }
 
+// allocation_error func makes the same but with clean-up
 void	exit_failure(char *msg)
 {
 	ft_putendl_fd("Error", 2);
