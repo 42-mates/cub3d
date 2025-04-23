@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 01:05:38 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:24:23 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,19 @@ static void	get_player_position(t_game *cub)
 	}
 }
 
+static void	init_game(t_game *cub)
+{
+	ft_bzero(cub, sizeof(t_game));
+	cub->map_scale = MINIMAP_SCALE;
+	init_window(cub, WIN_TITLE);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game cub;
 	
 	check_args(argc, argv);
-	ft_bzero(&cub, sizeof(t_game));
-	init_window(&cub, WIN_TITLE);
+	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
 	validate_map_content(&cub);
 	get_player_position(&cub);

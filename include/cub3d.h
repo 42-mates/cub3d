@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 01:57:06 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:19:28 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,20 @@
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
-# define MAX_MAP_W 300
-# define MAX_MAP_H 300
+# define MAX_MAP_W 70
+# define MAX_MAP_H 70
+
+# define MINIMAP_SCALE 8
+# define MIN_SCALE 4
+# define MAX_SCALE 12
 
 # define MOVE_SPEED 0.007 // 0.01 faster
 # define ROT_SPEED 0.007 // radians 0.01 faster
 # define MOUSE_SENS 0.01 // set to 0.0025 to slow down
 
-# define BLACK 0x000000
-# define WHITE 0xFFFFFF
+# define BLACK 0x333333
+# define GREY 0xCCCCCC
+# define RED 0xFF0000
 
 typedef struct		s_map_node
 {
@@ -89,6 +94,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	int			minimap;
+	int			map_scale;
 	t_image		image;
 	t_player	player;
 	t_keys		keys;
@@ -142,7 +148,7 @@ void			save_map_to_grid(t_map_node *lines, t_game *cub);
 void			set_player_direction(t_game *cub, char c);
 void			render_frame(t_game *cub);
 void			put_pixel(t_image *img, int x, int y, int color);
-void			draw_minimap(t_game *cub, int map_scale);
+void			draw_minimap(t_game *cub);
 int				mouse_press(int button, int x, int y, t_game *cub);
 int				mouse_release(int button, int x, int y, t_game *cub);
 int				mouse_move(int x, int y, t_game *cub);

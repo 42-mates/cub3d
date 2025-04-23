@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 19:00:22 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/22 22:03:54 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:21:10 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ static int	key_press(int keycode, t_game *cub)
 		cub->keys.right = 1;
 	else if (keycode == XK_m)
 		cub->minimap = !cub->minimap;
+	else if (keycode == XK_KP_Add && cub->map_scale < MAX_SCALE)
+		cub->map_scale++;
+	else if (keycode == XK_KP_Subtract && cub->map_scale > MIN_SCALE)
+		cub->map_scale--;
 	return (0);
 }
 

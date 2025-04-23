@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/15 20:45:31 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:30:56 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	render_frame(t_game *cub)
 	draw_background(cub);
 	render_rays(cub);
 	if (cub->minimap)
-		draw_minimap(cub, 8);
+		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->image.img, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:40:13 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/23 01:18:21 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:22:53 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void    pad_lines(t_game *cub)
 void	check_map_size(t_game *cub, int w, int h)
 {
 	if (w > MAX_MAP_W || h > MAX_MAP_H)
-		error_exit(cub, "Map too big (max 300x300)");
+		error_exit(cub, "Map too big (max 70x70)");
 }
 
 void    save_map_to_grid(t_map_node *lines, t_game *cub)
