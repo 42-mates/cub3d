@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/21 22:26:51 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 01:57:06 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@
 # include <fcntl.h>
 
 # define WIN_TITLE "cub3D"
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 768
+# define MAX_MAP_W 300
+# define MAX_MAP_H 300
+
 # define MOVE_SPEED 0.007 // 0.01 faster
 # define ROT_SPEED 0.007 // radians 0.01 faster
 # define MOUSE_SENS 0.01 // set to 0.0025 to slow down
+
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 
@@ -110,8 +114,9 @@ typedef struct s_ray
 
 // main, init & exit
 void			init_hooks(t_game *cub);
-void			allocation_error(t_game *cub, const char *message);
-void			exit_code(t_game *cub, int exit_code);
+void			free_tab(char **tab);
+void			error_exit(t_game *cub, const char *msg);
+void			exit_code(t_game *cub, int code);
 int				exit_success(t_game *cub);
 void			exit_failure(char *msg);
 

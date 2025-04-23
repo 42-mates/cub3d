@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/10 22:35:07 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/23 01:25:10 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// @mglikenf    long func name (free_map_list, free_tmp_list, free_list)
+//              memory leaks free(tmp->line); malloc in ft_strdup() in map_list_append
 void    deallocate_linked_list(t_map_node *head)
 {
     t_map_node  *current;
@@ -22,6 +24,7 @@ void    deallocate_linked_list(t_map_node *head)
     {
         tmp = current;
         current = current->next;
+        free(tmp->line);
         free(tmp);
     }
 }

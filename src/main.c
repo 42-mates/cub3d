@@ -6,12 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/21 21:52:30 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 01:05:38 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// @mglikenf close(fd) before last exit_failure
 static void	check_args(int argc, char **argv)
 {
 	char	*s;
@@ -32,6 +33,7 @@ static void	check_args(int argc, char **argv)
 		if (ft_strcmp(s, ".cub") == 0 && ft_strlen(s) == 4)
 			return ;
 	}
+	// close(fd)
 	exit_failure("Invalid file format");
 }
 
@@ -39,18 +41,18 @@ static void	init_window(t_game *cub, char *title)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
-		allocation_error(cub, "Error: Unable to initialize MLX");
+		error_exit(cub, "Unable to initialize MLX");
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, title);
 	if (!cub->win)
-		allocation_error(cub, "Error: Unable to create window");
+		error_exit(cub, "Unable to create window");
 	cub->image.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!cub->image.img)
-		allocation_error(cub, "Error: Unable to create image");
+		error_exit(cub, "Unable to create image");
 	cub->image.addr = mlx_get_data_addr(cub->image.img,
 			&cub->image.bits_per_pixel, &cub->image.line_length,
 			&cub->image.endian);
 	if (!cub->image.addr)
-		allocation_error(cub, "Error: Unable to get image data address");
+		error_exit(cub, "Unable to get image data address");
 }
 
 static void	get_player_position(t_game *cub)
