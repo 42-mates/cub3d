@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 14:37:55 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 22:43:15 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,14 @@ static void	draw_cell(t_game *cub, int x, int y, int scale)
 	}
 }
 
-static void	dir_line(t_game *cub, int px, int py, int scale)
+static void	dir_line(t_game *cub, int px, int py)
 {
-	int	len;
 	int	i;
 	int	dx;
 	int	dy;
 
-	len = scale / 2;
-	if (len < 10)
-		len = 10;
 	i = 0;
-	while (i < len)
+	while (i < DIR_LEN)
 	{
 		dx = (int)(cub->player.dir_x * i);
 		dy = (int)(cub->player.dir_y * i);
@@ -86,7 +82,7 @@ static void	draw_player(t_game *cub, int scale)
 		}
 		i++;
 	}
-	dir_line(cub, px, py, scale);
+	dir_line(cub, px, py);
 }
 
 void	draw_minimap(t_game *cub)

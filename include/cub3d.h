@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 14:19:28 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/23 22:43:02 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 # define MAX_MAP_H 70
 
 # define MINIMAP_SCALE 8
-# define MIN_SCALE 4
+# define DIR_LEN 10
+# define MIN_SCALE 5
 # define MAX_SCALE 12
 
 # define MOVE_SPEED 0.007 // 0.01 faster
