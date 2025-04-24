@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 21:06:31 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 22:43:15 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:02:03 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	cell_color(t_game *cub, int x, int y)
 	
 	tile = cub->map.grid[y][x];	
 	if (tile == '1')
-		return (BLACK);
+		return (DARK_GREY);
 	if (tile == '0')
 		return (GREY);
 	return (-1);

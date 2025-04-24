@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 22:43:02 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:52:23 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@
 # define ROT_SPEED 0.007 // radians 0.01 faster
 # define MOUSE_SENS 0.01 // set to 0.0025 to slow down
 
-# define BLACK 0x333333
+# define BLACK 0x000000
+# define WHITE 0xFFFFFF
+# define DARK_GREY 0x333333
 # define GREY 0xCCCCCC
 # define RED 0xFF0000
 
@@ -96,6 +98,7 @@ typedef struct s_game
 	void		*win;
 	int			minimap;
 	int			map_scale;
+	int			controls;
 	t_image		image;
 	t_player	player;
 	t_keys		keys;
@@ -158,7 +161,7 @@ void			move_forward(t_game *cub);
 void			move_backward(t_game *cub);
 void			strafe_right(t_game *cub);
 void			strafe_left(t_game *cub);
-void			cast_ray(t_game *cub, t_ray *ray, double camera_x);
+void			render_rays(t_game *cub);
 void			draw_wall_slice(t_game *cub, int x, double dist, int side);
 
 // debug

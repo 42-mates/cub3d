@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/11 13:24:34 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:48:31 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ void	print_map_data(const t_map *map)
 
 void	print_data(const t_game *cub)
 {
-	printf("Game Data:\n");
-	printf("  mlx: %p\n", cub->mlx);
-	printf("  win: %p\n\n", cub->win);
-	print_image_data(&cub->image);
-	print_player_data(&cub->player);
+	//printf("Game Data:\n");
+	//printf("  mlx: %p\n", cub->mlx);
+	//printf("  win: %p\n\n", cub->win);
+	//print_image_data(&cub->image);
+	//print_player_data(&cub->player);
 	print_map_data(&cub->map);
 }
 

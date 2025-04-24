@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 14:24:23 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:50:20 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	init_game(t_game *cub)
 {
 	ft_bzero(cub, sizeof(t_game));
 	cub->map_scale = MINIMAP_SCALE;
+	cub->controls = 1;
 	init_window(cub, WIN_TITLE);
 }
 

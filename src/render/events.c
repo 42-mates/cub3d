@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 19:00:22 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/23 14:21:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:53:06 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ static int	key_press(int keycode, t_game *cub)
 {
 	if (keycode == XK_Escape)
 		exit_success(cub);
-	else if (keycode == XK_w)
+	else if (keycode == XK_w || keycode == XK_W)
 		cub->keys.w = 1;
-	else if (keycode == XK_s)
+	else if (keycode == XK_s || keycode == XK_S)
 		cub->keys.s = 1;
-	else if (keycode == XK_a)
+	else if (keycode == XK_a || keycode == XK_A)
 		cub->keys.a = 1;
-	else if (keycode == XK_d)
+	else if (keycode == XK_d || keycode == XK_D)
 		cub->keys.d = 1;
 	else if (keycode == XK_Left)
 		cub->keys.left = 1;
 	else if (keycode == XK_Right)
 		cub->keys.right = 1;
-	else if (keycode == XK_m)
+	else if (keycode == XK_m || keycode == XK_M)
 		cub->minimap = !cub->minimap;
+	else if (keycode == XK_c || keycode == XK_C)
+		cub->controls = !cub->controls;
 	else if (keycode == XK_KP_Add && cub->map_scale < MAX_SCALE)
 		cub->map_scale++;
 	else if (keycode == XK_KP_Subtract && cub->map_scale > MIN_SCALE)
@@ -39,13 +41,13 @@ static int	key_press(int keycode, t_game *cub)
 
 static int	key_release(int keycode, t_game *cub)
 {
-	if (keycode == XK_w)
+	if (keycode == XK_w || keycode == XK_W)
 		cub->keys.w = 0;
-	else if (keycode == XK_s)
+	else if (keycode == XK_s || keycode == XK_S)
 		cub->keys.s = 0;
-	else if (keycode == XK_a)
+	else if (keycode == XK_a || keycode == XK_A)
 		cub->keys.a = 0;
-	else if (keycode == XK_d)
+	else if (keycode == XK_d || keycode == XK_D)
 		cub->keys.d = 0;
 	else if (keycode == XK_Left)
 		cub->keys.left = 0;
