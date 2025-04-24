@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/10 22:45:52 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:32:23 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,56 @@ int validate_map_lines(t_map_node *head)
     return (0);
 }
 
+int is_walkable_tile(char tile)
+{
+    char    *set;
+
+    set = "NSWE0";
+    if (ft_strchr(set, tile))
+        return (1);
+    return (0);
+}
+
+int has_invalid_neighbor(int y, int x, t_map *map)
+{
+    if (y == 0 || y >= map->height - 1 || x == 0 || x >= map->width - 1)
+    {
+        printf("tile (x=%d, y=%d) is located on edge of the map\n", x, y);
+        return (1);
+    }
+    if (map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' ' || map->grid[y][x - 1] == ' ' || map->grid[y][x + 1] == ' ')
+        return (printf("map has a hole\n"), 1);
+    return (0);
+}
+
+void    validate_tiles(t_game *cub)
+{
+    int     y;
+    int     x;
+    char    tile;
+
+    y = 0;
+    while (y < cub->map.height)
+    {
+        x = 0;
+        while (x < cub->map.width)
+        {
+            tile = cub->map.grid[y][x];
+            if (is_walkable_tile(tile))
+            {
+                if (has_invalid_neighbor(y, x, &cub->map))
+                {
+                    free_memory_and_exit(cub);
+                    printf("Error\nMap is invalid\n");
+                    exit_code(cub, 1);
+                }
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
 void	validate_map_content(t_game *cub)
 {
 	if (validate_map_lines(cub->map.temp_list))
@@ -77,6 +127,6 @@ void	validate_map_content(t_game *cub)
         printf("map is invalid\n");
         // cleanup and exit
     }
-    
-    save_map_to_grid(cub->map.temp_list, cub);
+    save_map_to_grid(cub);
+    validate_tiles(cub);
 }
