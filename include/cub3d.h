@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 13:13:03 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:03:37 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # define WIN_TITLE "cub3D"
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
-# define MAX_MAP_W 70
-# define MAX_MAP_H 70
+# define MAX_MAP 70
 
 # define MINIMAP_SCALE 8
 # define DIR_LEN 10
@@ -59,6 +58,7 @@ typedef struct s_map
 	char		*ea_texture;
 	int			floor_rgb;
 	int			ceiling_rgb;
+	int			fd;
 	t_map_node	*temp_list;
 }				t_map;
 
@@ -105,7 +105,6 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	int			minimap;
-	int			fd;
 	int			map_scale;
 	int			controls;
 	t_image		image;
@@ -135,6 +134,8 @@ typedef struct s_ray
 // main, init & exit
 void			init_hooks(t_game *cub);
 void			free_tab(char **tab);
+void			free_map(t_map *m);
+void    		free_tmp_list(t_map_node *head);
 void			error_exit(t_game *cub, const char *msg);
 void			exit_code(t_game *cub, int code);
 int				exit_success(t_game *cub);
@@ -146,23 +147,19 @@ void    		parse_scene_file(char *file_name, t_game *cub);
 char    		*open_file(char *file_name, t_game *cub);
 void    		identify_line_type(char *line, t_game *cub);
 void    		remove_newline(char *line);
-void    		map_list_append(char *line, t_map_node **head);
 int 			is_map_line(char *line);
 int 			line_is_empty(char *line);
 void			validate_map_content(t_game *cub);
-int 			validate_map_lines(t_map_node *head);
 int     		line_has_invalid_chars(char *line);
 int 			append_players(char *line);
 int 			is_config_line(char *trimmed);
 void    		parse_config(char *line, t_game *cub);
 char    		*extract_path(char *trimmed, int i);
-void    		deallocate_linked_list(t_map_node *map_lines);
 int 			convert_rgb_to_int(int red, int green, int blue);
-int 			separate_rgb_values(char *line);
+int				separate_rgb_values(t_game *cub, char *line);
 void    		save_map_to_grid(t_game *cub);
 void    		calculate_grid_dimensions(t_game *cub);
 void    		fill_and_pad_grid_lines(t_game *cub);
-void    		free_memory_and_exit(t_game *cub);
 
 // render
 void			set_player_direction(t_game *cub, char c);

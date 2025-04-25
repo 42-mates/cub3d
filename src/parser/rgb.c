@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/24 18:14:49 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:36:37 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ int convert_rgb_to_int(int red, int green, int blue)
 	return (color);
 }
 
-// @mglikenf	exit -> need to free memory, add cub to param
-//				try to malloc -> check if it's failed (ft_substr, ft_split)
-//				memory leaks, you need to free tab
-int separate_rgb_values(char *line)
+// check for substrings validated
+int separate_rgb_values(t_game *cub, char *line)
 {
 	char	**rgb;
 	char	*tmp;
@@ -51,15 +49,15 @@ int separate_rgb_values(char *line)
 	while (!ft_isdigit(line[i]))
 		i++;
 	tmp = ft_substr(line, i, ft_strlen(line) - i);
-	// if (!tmp)
-	// 	error_exit(cub, "Malloc failed");
+	if (!tmp)
+		error_exit(cub, "Malloc failed");
 	rgb = ft_split(tmp, ',');
 	free(tmp);
-	// if (!rgb)
-	// 	error_exit(cub, "Malloc failed");
+	if (!rgb)
+		error_exit(cub, "Malloc failed");
 	value = convert_rgb_to_int(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	free_tab(rgb);
-	if (value == -1)
-		error_exit(NULL, "RGB values must be between 0 and 255");
+	if (value == -1  || !rgb[0] || !rgb[1] || !rgb[2])
+		error_exit(cub, "RGB values must be between 0 and 255");
 	return (value);
 }

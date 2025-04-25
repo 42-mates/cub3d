@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/10 00:04:03 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:28:28 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void    parse_config(char *line, t_game *cub)
     else if (ft_strncmp(trimmed, "EA", 2) == 0)
         cub->map.ea_texture = extract_path(trimmed, 2);
     else if (ft_strncmp(trimmed, "F", 1) == 0)
-        cub->map.floor_rgb = separate_rgb_values(trimmed);
+        cub->map.floor_rgb = separate_rgb_values(cub, trimmed);
     else if (ft_strncmp(trimmed, "C", 1) == 0)
-        cub->map.ceiling_rgb = separate_rgb_values(trimmed);
+        cub->map.ceiling_rgb = separate_rgb_values(cub, trimmed);
     free(trimmed);
 }
 

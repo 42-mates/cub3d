@@ -13,6 +13,7 @@ SRCS			= src/main.c \
 				  src/render/rotate.c \
 				  src/render/events.c \
 				  src/utils/exit.c \
+				  src/utils/free.c \
 				  src/utils/debug.c \
 				  src/parser/parser.c \
 				  src/parser/map.c \

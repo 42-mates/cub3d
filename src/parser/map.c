@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:40:13 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 01:01:00 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:07:36 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	check_map_size(t_game *cub, int w, int h)
+{
+	if (w > MAX_MAP || h > MAX_MAP)
+		error_exit(cub, "Map too big (max 70x70)");
+}
 
 void    calculate_grid_dimensions(t_game *cub)
 {
@@ -28,15 +34,9 @@ void    calculate_grid_dimensions(t_game *cub)
             max_width = ft_strlen(current->line);
         current = current->next;
     }
+    check_map_size(cub, max_width, height);
     cub->map.height = height;
     cub->map.width = max_width;
-}
-
-// @mglikenf    check in save_map_to_grid
-void	check_map_size(t_game *cub, int w, int h)
-{
-	if (w > MAX_MAP_W || h > MAX_MAP_H)
-		error_exit(cub, "Map too big (max 70x70)");
 }
 
 void    fill_and_pad_grid_lines(t_game *cub)
@@ -51,10 +51,7 @@ void    fill_and_pad_grid_lines(t_game *cub)
     {
         cub->map.grid[i] = malloc((cub->map.width + 1));
         if (!cub->map.grid[i])
-        {
-            free_memory_and_exit(cub);
-            exit_failure("malloc fail");
-        }
+            error_exit(cub, "malloc fail");
         line_len = ft_strlen(current->line);
         ft_memset(cub->map.grid[i], ' ', cub->map.width);
         ft_memcpy(cub->map.grid[i], current->line, line_len);
@@ -69,36 +66,9 @@ void    save_map_to_grid(t_game *cub)
     calculate_grid_dimensions(cub);
     cub->map.grid = malloc(sizeof(char*) * (cub->map.height + 1));
     if (!cub->map.grid)
-    {
-        printf("malloc fail\n");
-        free_memory_and_exit(cub);
-        exit(1);
-    }
+        error_exit(cub, "malloc fail");
     fill_and_pad_grid_lines(cub);
     cub->map.grid[cub->map.height] = NULL;
-    deallocate_linked_list(cub->map.temp_list);
-}
-
-void    free_memory_and_exit(t_game *cub)
-{
-    int     i;
-    t_map   map;
-
-    map = cub->map;
-    if (map.grid)
-    {
-        i = 0;
-        while (map.grid[i])
-        {
-            free(map.grid[i]);
-            i++;
-        }
-        free(map.grid);
-    }
-    free(map.no_texture);
-    free(map.so_texture);
-    free(map.ea_texture);
-    free(map.we_texture);
-    if (map.temp_list)
-        deallocate_linked_list(map.temp_list);
+    // if (cub->map.temp_list)
+    //     free_tmp_list(cub->map.temp_list);
 }
