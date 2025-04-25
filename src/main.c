@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/24 16:50:20 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:02:40 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,17 @@ static void	init_game(t_game *cub)
 	init_window(cub, WIN_TITLE);
 }
 
+static void load_texture(t_game *cub, t_tex *tex, char *path)
+{
+    tex->img.img = mlx_xpm_file_to_image(cub->mlx, path, &tex->w, &tex->h);
+    if (!tex->img.img)
+		error_exit(cub, "failed to load texture");
+	tex->img.addr = mlx_get_data_addr(tex->img.img,
+                              &tex->img.bits_per_pixel,
+                              &tex->img.line_length,
+                              &tex->img.endian);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game cub;
@@ -96,6 +107,7 @@ int	main(int argc, char **argv)
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
 	validate_map_content(&cub);
+	load_texture(&cub, &cub.wall, cub.map.no_texture);
 	get_player_position(&cub);
 	print_data(&cub);
 	render_frame(&cub);

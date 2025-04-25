@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/24 17:52:23 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:41:05 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MOVE_SPEED 0.007 // 0.01 faster
 # define ROT_SPEED 0.007 // radians 0.01 faster
 # define MOUSE_SENS 0.01 // set to 0.0025 to slow down
+# define EPS 1e-6
 
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
@@ -92,6 +93,13 @@ typedef struct s_image
 	int			endian;
 }				t_image;
 
+typedef struct s_tex
+{
+	t_image		img;
+	int			w;
+	int			h;
+}				t_tex;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -103,6 +111,7 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	t_map		map;
+	t_tex		wall;
 }				t_game;
 
 typedef struct s_ray
@@ -162,7 +171,8 @@ void			move_backward(t_game *cub);
 void			strafe_right(t_game *cub);
 void			strafe_left(t_game *cub);
 void			render_rays(t_game *cub);
-void			draw_wall_slice(t_game *cub, int x, double dist, int side);
+//void			draw_wall_slice(t_game *cub, int x, double dist, int side);
+void			draw_wall_slice(t_game *cub, t_ray *ray, int x);
 
 // debug
 void			print_data(const t_game *cub);
