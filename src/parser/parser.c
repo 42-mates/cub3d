@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/23 01:25:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 00:57:04 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,40 +87,120 @@ void    remove_newline(char *line)
     len = ft_strlen(line);
     if (len > 0 && line[len - 1] == '\n')
         line[len - 1] = '\0';
-    // multiple newline characters ?
+}
+
+char    *open_file(char *file_name, t_game *cub)
+{
+    char    *line;
+
+    cub->fd = open(file_name, O_RDONLY);
+    if (cub->fd < 0)
+    {
+        printf("Error\nFile cannot be opened\n");
+        exit_code(cub, 1);
+    }
+    line = get_next_line(cub->fd);
+    if (!line)
+    {
+        close(cub->fd);
+        printf("Error\nEmpty file\n");
+        exit_code(cub, 1);
+    }
+    return (line);
+}
+
+void    identify_line_type(char *line, t_game *cub)
+{
+    if (is_config_line(line))
+        parse_config(line, cub);
+    else if (is_map_line(line))
+        map_list_append(line, &cub->map.temp_list);
+    else if (!line_is_empty(line))
+    {
+        printf("Error\nInvalid line in .cub file: %s\n", line);
+        free(line);
+        close(cub->fd);
+        free_memory_and_exit(cub);
+        exit_code(cub, 1);
+    }
 }
 
 void    parse_scene_file(char *file_name, t_game *cub)
 {
-    int         fd;
-    char        *line;
+    char    *line;
 
-    fd = open(file_name, O_RDONLY);
-    if (fd < 0)
-        exit_failure("File can't be opened");
-    line = get_next_line(fd);
-    if (line == NULL)
+    line = open_file(file_name, cub);
+    while (line)
     {
-        close(fd);
-        exit_failure("Empty file");
-    }
-    while (line != NULL)
-    {
-        remove_newline(line);
-        if (is_config_line(line))
-            parse_config(line, cub);
-        else if (is_map_line(line))
-            map_list_append(line, &cub->map.temp_list);
-        else if (!line_is_empty(line))
+        if (line_is_empty(line))
         {
-            // // handle memory leaks
-            // close(fd);
-            // free(line);
-            break ;
+            free(line);
+            line = get_next_line(cub->fd);
+            continue;
         }
+        remove_newline(line);
+        identify_line_type(line, cub);
         free(line);
-        line = get_next_line(fd);
+        line = get_next_line(cub->fd);
     }
-    close(fd);
-    free(line);
+    close(cub->fd);
 }
+
+
+/***********************************/
+
+// void    parse_scene_file(char *file_name, t_game *cub)
+// {
+//     char        *line;
+//     int         map_started;
+    
+//     map_started = 0;
+//     cub->fd = open(file_name, O_RDONLY);
+//     if (cub->fd < 0)
+//     {
+//         printf("Error\nFile cannot be opened\n");
+//         exit_code(cub, 1);
+//     }
+//     line = get_next_line(cub->fd);
+//     if (line == NULL)
+//     {
+//         close(cub->fd);
+//         printf("Error\nEmpty file\n");
+//         exit_code(cub, 1);
+//     }
+//     while ((line = get_next_line(cub->fd)))
+//     {
+//         remove_newline(line);
+//         if (line_is_empty(line))
+//         {
+//             free(line);
+//             continue;
+//         }
+//         if (!map_started && is_config_line(line))
+//             parse_config(line, cub);
+//         else if (is_map_line(line))
+//         {
+//             map_started = 1;
+//             map_list_append(line, &cub->map.temp_list);
+//         }
+//         else if (map_started && is_config_line(line))
+//         {
+//             free(line);
+//             close(cub->fd);
+//             printf("Error\nInvalid file: map content must be last\n");
+//             free_memory_and_exit(cub);
+//             exit_code(cub, 1);
+//         }
+//         else
+//         {
+//             free(line);
+//             close(cub->fd);
+//             printf("Error\nInvalid line in .cub file\n");
+//             free_memory_and_exit(cub);
+//             exit_code(cub, 1);
+//         }
+//         free(line);
+//     }
+//     free(line);
+//     close(cub->fd);
+// }

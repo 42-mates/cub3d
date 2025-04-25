@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 01:41:05 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:13:03 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	int			minimap;
+	int			fd;
 	int			map_scale;
 	int			controls;
 	t_image		image;
@@ -138,9 +139,12 @@ void			error_exit(t_game *cub, const char *msg);
 void			exit_code(t_game *cub, int code);
 int				exit_success(t_game *cub);
 void			exit_failure(char *msg);
+void			purge_gnl(int fd);
 
 // map & config parser
 void    		parse_scene_file(char *file_name, t_game *cub);
+char    		*open_file(char *file_name, t_game *cub);
+void    		identify_line_type(char *line, t_game *cub);
 void    		remove_newline(char *line);
 void    		map_list_append(char *line, t_map_node **head);
 int 			is_map_line(char *line);
@@ -155,7 +159,10 @@ char    		*extract_path(char *trimmed, int i);
 void    		deallocate_linked_list(t_map_node *map_lines);
 int 			convert_rgb_to_int(int red, int green, int blue);
 int 			separate_rgb_values(char *line);
-void			save_map_to_grid(t_map_node *lines, t_game *cub);
+void    		save_map_to_grid(t_game *cub);
+void    		calculate_grid_dimensions(t_game *cub);
+void    		fill_and_pad_grid_lines(t_game *cub);
+void    		free_memory_and_exit(t_game *cub);
 
 // render
 void			set_player_direction(t_game *cub, char c);

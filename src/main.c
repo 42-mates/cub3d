@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 01:02:40 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:14:35 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,12 @@ int	main(int argc, char **argv)
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
 	validate_map_content(&cub);
+	print_data(&cub);
 	load_texture(&cub, &cub.wall, cub.map.no_texture);
 	get_player_position(&cub);
-	print_data(&cub);
 	render_frame(&cub);
 	init_hooks(&cub);
 	mlx_loop(cub.mlx);
+	
 	return (EXIT_SUCCESS);
 }
