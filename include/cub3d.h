@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 15:03:37 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 00:20:21 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,23 @@ typedef struct s_player
 	double		plane_y;
 }				t_player;
 
-typedef struct s_image
+typedef struct	s_image
 {
 	void		*img;
 	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
+	int			w;
+	int			h;
+	int			bpp;
+	int			line_len;
 	int			endian;
 }				t_image;
 
-typedef struct s_tex
+typedef struct	s_tex
 {
-	t_image		img;
-	int			w;
-	int			h;
+	t_image		*no;
+	t_image		*so;
+	t_image		*we;
+	t_image		*ea;
 }				t_tex;
 
 typedef struct s_game
@@ -111,7 +114,7 @@ typedef struct s_game
 	t_player	player;
 	t_keys		keys;
 	t_map		map;
-	t_tex		wall;
+	t_tex		tex;
 }				t_game;
 
 typedef struct s_ray
@@ -132,10 +135,12 @@ typedef struct s_ray
 }				t_ray;
 
 // main, init & exit
+void			load_textures(t_game *cub);
 void			init_hooks(t_game *cub);
 void			free_tab(char **tab);
 void			free_map(t_map *m);
 void    		free_tmp_list(t_map_node *head);
+void			free_textures(t_game *cub);
 void			error_exit(t_game *cub, const char *msg);
 void			exit_code(t_game *cub, int code);
 int				exit_success(t_game *cub);
@@ -176,7 +181,7 @@ void			strafe_right(t_game *cub);
 void			strafe_left(t_game *cub);
 void			render_rays(t_game *cub);
 //void			draw_wall_slice(t_game *cub, int x, double dist, int side);
-void			draw_wall_slice(t_game *cub, t_ray *ray, int x);
+void			draw_wall(t_game *cub, t_ray *ray, int x);
 
 // debug
 void			print_data(const t_game *cub);

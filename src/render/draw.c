@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:38:08 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 01:34:32 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 01:30:05 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,22 @@ static double	clamp_double(double v, double min)
 	return (v);
 }
 
-static int	get_tex_x(t_game *g, const t_ray *ray)
+static int	get_tex_x(t_ray *ray, t_image *wall, t_player *player)
 {
 	double	wall_x;
 	int		tex_x;
 
 	if (ray->side == 0)
-		wall_x = g->player.pos_y + ray->wall_dist * ray->dir_y;
+		wall_x = player->pos_y + ray->wall_dist * ray->dir_y;
 	else
-		wall_x = g->player.pos_x + ray->wall_dist * ray->dir_x;
+		wall_x = player->pos_x + ray->wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * g->wall.w);
-	tex_x = clamp_int(tex_x, 0, g->wall.w - 1);
+	tex_x = (int)(wall_x * wall->w);
+	if (ray->side == 0 && ray->dir_x < 0)
+	    tex_x = wall->w - tex_x - 1;
+	if (ray->side == 1 && ray->dir_y > 0)
+	    tex_x = wall->w - tex_x - 1;
+	tex_x = clamp_int(tex_x, 0, wall->w - 1);
 	return (tex_x);
 }
 
@@ -83,44 +87,91 @@ static void	get_line_limits(int *start, int *end, int line_h)
 		*end = WIN_HEIGHT - 1;
 }
 
-static void	draw_column(t_game *g, int x, int start, int end,
-										int tex_x, int line_h)
+static void	draw_column(t_game *g, t_image *wall,
+						int x, int start, int end, int tex_x, int line_h)
 {
-	int	y;
-	int	d;
-	int	tex_y;
-	int	bpp;
+	int		y;
+	int		d;
+	int		tex_y;
+	int		bpp;
 	char	*src;
-	int	color;
+	int		color;
 
-	bpp = g->wall.img.bits_per_pixel / 8;
+	bpp = wall->bpp / 8;
 	y = start;
 	while (y <= end)
 	{
 		d = y * 256 - WIN_HEIGHT * 128 + line_h * 128;
-		tex_y = (d * g->wall.h) / line_h;
+		tex_y = (d * wall->h) / line_h;
 		tex_y = tex_y / 256;
-		tex_y = clamp_int(tex_y, 0, g->wall.h - 1);
-		src = g->wall.img.addr + tex_y * g->wall.img.line_length + tex_x * bpp;
+		tex_y = clamp_int(tex_y, 0, wall->h - 1);
+		src = wall->addr + tex_y * wall->line_len + tex_x * bpp;
 		color = *(int *)src;
 		put_pixel(&g->image, x, y, color);
 		y++;
 	}
 }
 
-void	draw_wall_slice(t_game *g, t_ray *ray, int x)
+// static void	draw_column(t_game *g, int x, int start, int end,
+// 										int tex_x, int line_h)
+// {
+// 	int	y;
+// 	int	d;
+// 	int	tex_y;
+// 	int	bpp;
+// 	char	*src;
+// 	int	color;
+
+// 	bpp = g->wall.img.bits_per_pixel / 8;
+// 	y = start;
+// 	while (y <= end)
+// 	{
+// 		d = y * 256 - WIN_HEIGHT * 128 + line_h * 128;
+// 		tex_y = (d * g->wall.h) / line_h;
+// 		tex_y = tex_y / 256;
+// 		tex_y = clamp_int(tex_y, 0, g->wall.h - 1);
+// 		src = g->wall.img.addr + tex_y * g->wall.img.line_length + tex_x * bpp;
+// 		color = *(int *)src;
+// 		put_pixel(&g->image, x, y, color);
+// 		y++;
+// 	}
+// }
+
+static t_image *get_tex(t_game *g, t_ray *ray)
+{
+	if (ray->side == 0)
+	{
+		if (ray->map_x > g->player.pos_x)
+			return (g->tex.ea);
+		else
+			return (g->tex.we);
+	}
+	else
+	{
+		if (ray->map_y > g->player.pos_y)
+			return (g->tex.so);
+		else
+			return (g->tex.no);
+	}
+}
+
+void	draw_wall(t_game *g, t_ray *ray, int x)
 {
 	int		line_h;
 	int		start;
 	int		end;
 	int		tex_x;
 	double	dist;
+	t_image	*wall;
 
 	dist = clamp_double(ray->wall_dist, 0.01);
 	line_h = (int)(WIN_HEIGHT / dist);
 	get_line_limits(&start, &end, line_h);
-	tex_x = get_tex_x(g, ray);
-	draw_column(g, x, start, end, tex_x, line_h);
+	wall = get_tex(g, ray);
+	tex_x = get_tex_x(ray, wall, &g->player);
+	draw_column(g, wall, x, start, end, tex_x, line_h);
+	// tex_x = get_tex_x(g, ray);
+	// draw_column(g, x, start, end, tex_x, line_h);
 }
 
 // void draw_wall_slice(t_game *cub, t_ray *ray, int x)

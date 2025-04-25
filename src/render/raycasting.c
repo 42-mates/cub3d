@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:39:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 01:58:46 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 00:19:30 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	render_rays(t_game *cub)
 		cam_x = 2.0 * x / (double)WIN_WIDTH - 1.0;
 		ft_bzero(&ray, sizeof(t_ray));
 		cast_ray(cub, &ray, cam_x);
-		draw_wall_slice(cub, &ray, x);
+		draw_wall(cub, &ray, x);
 		//draw_wall_slice(cub, x, ray.wall_dist, ray.side);
 		x++;
 	}

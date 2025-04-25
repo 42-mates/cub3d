@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 13:14:35 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 00:03:27 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static void	init_window(t_game *cub, char *title)
 	if (!cub->image.img)
 		error_exit(cub, "Unable to create image");
 	cub->image.addr = mlx_get_data_addr(cub->image.img,
-			&cub->image.bits_per_pixel, &cub->image.line_length,
-			&cub->image.endian);
+			&cub->image.bpp, &cub->image.line_len, &cub->image.endian);
 	if (!cub->image.addr)
 		error_exit(cub, "Unable to get image data address");
 }
@@ -88,17 +87,6 @@ static void	init_game(t_game *cub)
 	init_window(cub, WIN_TITLE);
 }
 
-static void load_texture(t_game *cub, t_tex *tex, char *path)
-{
-    tex->img.img = mlx_xpm_file_to_image(cub->mlx, path, &tex->w, &tex->h);
-    if (!tex->img.img)
-		error_exit(cub, "failed to load texture");
-	tex->img.addr = mlx_get_data_addr(tex->img.img,
-                              &tex->img.bits_per_pixel,
-                              &tex->img.line_length,
-                              &tex->img.endian);
-}
-
 int	main(int argc, char **argv)
 {
 	t_game cub;
@@ -108,11 +96,10 @@ int	main(int argc, char **argv)
 	parse_scene_file(argv[1], &cub);
 	validate_map_content(&cub);
 	print_data(&cub);
-	load_texture(&cub, &cub.wall, cub.map.no_texture);
+	load_textures(&cub);
 	get_player_position(&cub);
 	render_frame(&cub);
 	init_hooks(&cub);
 	mlx_loop(cub.mlx);
-	
 	return (EXIT_SUCCESS);
 }
