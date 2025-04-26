@@ -6,13 +6,14 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 00:03:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:11:29 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// @mglikenf close(fd) before last exit_failure
+// @mglikenf invalid file descriptor -1 in syscall close()
+//				when can't open file
 static void	check_args(int argc, char **argv)
 {
 	char	*s;
@@ -23,18 +24,14 @@ static void	check_args(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || read(fd, NULL, 0) < 0)
 	{
-		close(fd);
+		if (fd >= 0)
+			close(fd);
 		exit_failure("File does not exist or is a directory");
 	}
 	close(fd);
 	s = ft_strchr(argv[1], '.');
-	if (s)
-	{
-		if (ft_strcmp(s, ".cub") == 0 && ft_strlen(s) == 4)
-			return ;
-	}
-	// close(fd)
-	exit_failure("Invalid file format");
+	if (!s || ft_strcmp(s, ".cub") || ft_strlen(s) != 4)
+		exit_failure("Invalid file format");
 }
 
 static void	init_window(t_game *cub, char *title)

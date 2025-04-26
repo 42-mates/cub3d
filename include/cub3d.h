@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 00:20:21 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:25:58 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void			load_textures(t_game *cub);
 void			init_hooks(t_game *cub);
 void			free_tab(char **tab);
 void			free_map(t_map *m);
-void    		free_tmp_list(t_map_node *head);
 void			free_textures(t_game *cub);
 void			error_exit(t_game *cub, const char *msg);
 void			exit_code(t_game *cub, int code);
@@ -149,22 +148,11 @@ void			purge_gnl(int fd);
 
 // map & config parser
 void    		parse_scene_file(char *file_name, t_game *cub);
-char    		*open_file(char *file_name, t_game *cub);
-void    		identify_line_type(char *line, t_game *cub);
-void    		remove_newline(char *line);
-int 			is_map_line(char *line);
-int 			line_is_empty(char *line);
 void			validate_map_content(t_game *cub);
-int     		line_has_invalid_chars(char *line);
-int 			append_players(char *line);
 int 			is_config_line(char *trimmed);
 void    		parse_config(char *line, t_game *cub);
-char    		*extract_path(char *trimmed, int i);
-int 			convert_rgb_to_int(int red, int green, int blue);
 int				separate_rgb_values(t_game *cub, char *line);
 void    		save_map_to_grid(t_game *cub);
-void    		calculate_grid_dimensions(t_game *cub);
-void    		fill_and_pad_grid_lines(t_game *cub);
 
 // render
 void			set_player_direction(t_game *cub, char c);
@@ -185,6 +173,5 @@ void			draw_wall(t_game *cub, t_ray *ray, int x);
 
 // debug
 void			print_data(const t_game *cub);
-void    		print_temp_list(t_map_node *map_lines);
 
 #endif
