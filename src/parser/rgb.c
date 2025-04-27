@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/27 01:19:44 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:57:05 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int skip_ws(const char *s, int i)
 {
+	if (!s)
+		return (i);
 	while (s[i] == ' ' || s[i] == '\t')
 		++i;
 	return (i);
@@ -24,6 +26,8 @@ static int  parse_component(char *tok, t_game *cub)
 	int i;
 	long n;
 	
+	if (!tok)
+		error_exit(cub, "RGB: split failed");
 	i = skip_ws(tok, 0);
 	if (!ft_isdigit(tok[i]))
 		error_exit(cub, "RGB values must be positive integers (0-255)");

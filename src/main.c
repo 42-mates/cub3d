@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 23:11:29 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:38:48 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	init_game(t_game *cub)
 	ft_bzero(cub, sizeof(t_game));
 	cub->map_scale = MINIMAP_SCALE;
 	cub->controls = 1;
-	init_window(cub, WIN_TITLE);
 }
 
 int	main(int argc, char **argv)
@@ -93,6 +92,7 @@ int	main(int argc, char **argv)
 	parse_scene_file(argv[1], &cub);
 	validate_map_content(&cub);
 	print_data(&cub);
+	init_window(&cub, WIN_TITLE);
 	load_textures(&cub);
 	get_player_position(&cub);
 	render_frame(&cub);
