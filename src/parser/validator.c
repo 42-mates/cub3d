@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_content.c                                      :+:      :+:    :+:   */
+/*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 14:51:55 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 23:50:17 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int     line_has_invalid_chars(char *line)
     return (0);
 }
 
-static void validate_map_lines(t_game *cub, t_map_node *head)
+void validate_map_lines(t_game *cub, t_map_node *head)
 {
     t_map_node  *current;
     int         num_of_players;
@@ -60,17 +60,7 @@ static void validate_map_lines(t_game *cub, t_map_node *head)
         current = current->next;
     }
     if (num_of_players != 1)
-        error_exit(cub, "No players at all or too many");
-}
-
-int is_walkable_tile(char tile)
-{
-    char    *set;
-
-    set = "NSWE0";
-    if (ft_strchr(set, tile))
-        return (1);
-    return (0);
+        error_exit(cub, "Number of players must be exactly one");
 }
 
 int has_invalid_neighbor(int y, int x, t_map *map)
@@ -98,7 +88,7 @@ void    validate_tiles(t_game *cub)
         while (x < cub->map.width)
         {
             tile = cub->map.grid[y][x];
-            if (is_walkable_tile(tile))
+            if (ft_strchr("NEWS0", tile))
             {
                 if (has_invalid_neighbor(y, x, &cub->map))
                     error_exit(cub, "Map is invalid");
@@ -107,11 +97,4 @@ void    validate_tiles(t_game *cub)
         }
         y++;
     }
-}
-
-void	validate_map_content(t_game *cub)
-{
-	validate_map_lines(cub, cub->map.temp_list);
-    save_map_to_grid(cub);
-    validate_tiles(cub);
 }

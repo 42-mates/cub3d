@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 14:36:37 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:18:27 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void    free_split(char **split)
-{
-    int i;
-
-    i = 0;
-    if (!split)
-        return;
-    while (split[i])
-    {
-        free(split[i]);
-        i++;
-    }
-    free(split);
-}
 
 int convert_rgb_to_int(int red, int green, int blue)
 {
@@ -56,8 +41,11 @@ int separate_rgb_values(t_game *cub, char *line)
 	if (!rgb)
 		error_exit(cub, "Malloc failed");
 	value = convert_rgb_to_int(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
-	free_tab(rgb);
 	if (value == -1  || !rgb[0] || !rgb[1] || !rgb[2])
+	{
+		free_tab(rgb);
 		error_exit(cub, "RGB values must be between 0 and 255");
+	}
+	free_tab(rgb);
 	return (value);
 }

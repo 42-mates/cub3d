@@ -17,8 +17,9 @@ SRCS			= src/main.c \
 				  src/utils/debug.c \
 				  src/parser/parser.c \
 				  src/parser/map.c \
-				  src/parser/map_content.c \
+				  src/parser/type.c \
 				  src/parser/config.c \
+				  src/parser/validator.c \
 				  src/parser/rgb.c
 
 OBJS			= $(SRCS:src/%.c=$(OBJDIR)%.o)
