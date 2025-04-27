@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 23:25:58 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:50:55 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,6 @@ typedef struct	s_tex
 	t_image		*ea;
 }				t_tex;
 
-typedef struct s_game
-{
-	void		*mlx;
-	void		*win;
-	int			minimap;
-	int			map_scale;
-	int			controls;
-	t_image		image;
-	t_player	player;
-	t_keys		keys;
-	t_map		map;
-	t_tex		tex;
-}				t_game;
-
 typedef struct s_ray
 {
 	double		dir_x;
@@ -133,6 +119,21 @@ typedef struct s_ray
 	int			hit;
 	double		wall_dist;
 }				t_ray;
+
+typedef struct s_game
+{
+	void		*mlx;
+	void		*win;
+	int			minimap;
+	int			map_scale;
+	int			controls;
+	t_image		image;
+	t_player	player;
+	t_keys		keys;
+	t_map		map;
+	t_ray		ray;
+	t_tex		tex;
+}				t_game;
 
 // main, init & exit
 void			load_textures(t_game *cub);
@@ -168,8 +169,10 @@ void			move_backward(t_game *cub);
 void			strafe_right(t_game *cub);
 void			strafe_left(t_game *cub);
 void			render_rays(t_game *cub);
-//void			draw_wall_slice(t_game *cub, int x, double dist, int side);
-void			draw_wall(t_game *cub, t_ray *ray, int x);
+void			draw_wall(t_game *cub, int x);
+int				get_tex_y(int y, int line_h, int tex_h);
+int				get_tex_x(t_ray *ray, t_image *wall, t_player *player);
+int				clamp_int(int value, int min, int max);
 
 // debug
 void			print_data(const t_game *cub);

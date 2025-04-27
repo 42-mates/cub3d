@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:39:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 00:19:30 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:26:36 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,12 @@ static void	ray_init(t_game *cub, t_ray *ray, double camera_x)
  * - Performs DDA to detect wall collision
  * - Computes perpendicular distance from the player to the wall hit
  */
-static void	cast_ray(t_game *g, t_ray *r, double cam_x)
+static void	cast_ray(t_game *g, double cam_x)
 {
+	t_ray	*r;
 	double	delta;
 
+	r = &g->ray;
 	ray_init(g, r, cam_x);
 	ray_step(g, r);
 	perform_dda(g, r);
@@ -123,17 +125,15 @@ static void	cast_ray(t_game *g, t_ray *r, double cam_x)
 void	render_rays(t_game *cub)
 {
 	int		x;
-	t_ray	ray;
 	double	cam_x;
 
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
 		cam_x = 2.0 * x / (double)WIN_WIDTH - 1.0;
-		ft_bzero(&ray, sizeof(t_ray));
-		cast_ray(cub, &ray, cam_x);
-		draw_wall(cub, &ray, x);
-		//draw_wall_slice(cub, x, ray.wall_dist, ray.side);
+		ft_bzero(&cub->ray, sizeof(t_ray));
+		cast_ray(cub, cam_x);
+		draw_wall(cub, x);
 		x++;
 	}
 }
