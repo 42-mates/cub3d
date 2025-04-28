@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 23:51:20 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/27 23:36:11 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:47:07 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,18 @@ static t_image *load_texture(t_game *cub, char *path)
 		error_exit(cub, "Malloc failed in load_texture");
 	tex->img = mlx_xpm_file_to_image(cub->mlx, path, &tex->w, &tex->h);
 	if (!tex->img)
-		error_exit(cub, "Failed to load texture");
+	{
+		free(tex);
+		error_exit(cub, "Failed to load texture");		
+	}
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->addr)
+	{
+		mlx_destroy_image(cub->mlx, tex->img);
+		free(tex);
 		error_exit(cub, "Failed to get texture data address");
-	return (tex);
+	}
+		return (tex);
 }
 
 void load_textures(t_game *cub)

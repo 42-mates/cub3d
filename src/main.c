@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 10:16:42 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:04:27 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	init_window(t_game *cub, char *title)
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		error_exit(cub, "Unable to initialize MLX");
+	load_textures(cub);
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, title);
 	if (!cub->win)
 		error_exit(cub, "Unable to create window");
@@ -79,6 +80,8 @@ static void	init_game(t_game *cub)
 	ft_bzero(cub, sizeof(t_game));
 	cub->map_scale = MINIMAP_SCALE;
 	cub->controls = 1;
+	cub->map.floor_rgb = -1;
+	cub->map.ceiling_rgb = -1;
 }
 
 int	main(int argc, char **argv)
@@ -90,7 +93,6 @@ int	main(int argc, char **argv)
 	parse_scene_file(argv[1], &cub);
 	print_data(&cub);
 	init_window(&cub, WIN_TITLE);
-	load_textures(&cub);
 	get_player_position(&cub);
 	render_frame(&cub);
 	init_hooks(&cub);

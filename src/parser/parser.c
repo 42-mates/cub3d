@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 00:20:08 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:14:58 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ char    *open_file(char *file_name, t_game *cub)
     return (line);
 }
 
+void    check_struct(t_game *cub)
+{
+    if (!cub->map.grid || !cub->map.no_texture || !cub->map.so_texture
+        || !cub->map.we_texture || !cub->map.ea_texture
+        || cub->map.floor_rgb == -1 || cub->map.ceiling_rgb == -1)
+            error_exit(cub, "Missing configuration elements");
+}
+
 void    parse_scene_file(char *file_name, t_game *cub)
 {
     char    *line;
@@ -80,4 +88,5 @@ void    parse_scene_file(char *file_name, t_game *cub)
     save_map_to_grid(cub);
     validate_tiles(cub);
     close(cub->map.fd);
+    check_struct(cub);
 }
