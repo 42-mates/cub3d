@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/27 22:50:55 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:16:20 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,7 @@ void			purge_gnl(int fd);
 
 // map & config parser
 void    		parse_scene_file(char *file_name, t_game *cub);
-void			validate_map_content(t_game *cub);
 int 			is_config_line(char *trimmed);
-void    		parse_config(char *line, t_game *cub);
-int				separate_rgb_values(t_game *cub, char *line);
 void    		save_map_to_grid(t_game *cub);
 char    		*open_file(char *file_name, t_game *cub);
 void    		identify_line_type(char *line, t_game *cub, int *map_started);
@@ -167,9 +164,7 @@ void    		validate_tiles(t_game *cub);
 int 			has_invalid_neighbor(int y, int x, t_map *map);
 int 			is_config_line(char *trimmed);
 void    		parse_config(char *line, t_game *cub, int *map_started);
-char    		*extract_path(char *trimmed, int i);
-int 			convert_rgb_to_int(int red, int green, int blue);
-int				separate_rgb_values(t_game *cub, char *line);
+int				parse_rgb_line(t_game *cub, char *line);
 void    		save_map_to_grid(t_game *cub);
 void    		calculate_grid_dimensions(t_game *cub);
 void			check_map_size(t_game *cub, int w, int h);
@@ -196,5 +191,6 @@ int				clamp_int(int value, int min, int max);
 
 // debug
 void			print_data(const t_game *cub);
+void    print_temp_list(t_map_node *map_lines);
 
 #endif

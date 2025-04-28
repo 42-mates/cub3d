@@ -3,56 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   config.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/27 22:10:48 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:20:49 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char    *extract_path(char *trimmed, int i)
-{
-    while (trimmed[i] == ' ')
-        i++;
-    return (ft_substr(trimmed, i, ft_strlen(trimmed) - i));
-}
-
-void    parse_config(char *line, t_game *cub, int *map_started)
+void    extract_path(char *line, int i, char **dst, t_game *cub)
 {
     char    *trimmed;
 
-    if ((*map_started))
+    if (*dst)
     {
-        printf("Error\nMap content must be last\n");
+		free(line);
+		purge_gnl(cub->map.fd);
+		close(cub->map.fd);
+		error_exit(cub, "Double config line");
+	}
+	while (line[i] == ' ')
+		i++;
+    trimmed = ft_substr(line, i, ft_strlen(line) - i);
+    if (!trimmed)
+    {
         free(line);
-        purge_gnl(cub->map.fd);
-        close(cub->map.fd);
-        exit_code(cub, 1);
+		purge_gnl(cub->map.fd);
+		close(cub->map.fd);
+		error_exit(cub, "Malloc fail");
     }
-    trimmed = ft_strtrim(line, " ");
-    if (ft_strncmp(trimmed, "NO", 2) == 0)
-        cub->map.no_texture = extract_path(trimmed, 2);
-    else if (ft_strncmp(trimmed, "SO", 2) == 0)
-        cub->map.so_texture = extract_path(trimmed, 2);
-    else if (ft_strncmp(trimmed, "WE", 2) == 0)
-        cub->map.we_texture = extract_path(trimmed, 2);
-    else if (ft_strncmp(trimmed, "EA", 2) == 0)
-        cub->map.ea_texture = extract_path(trimmed, 2);
-    else if (ft_strncmp(trimmed, "F", 1) == 0)
-        cub->map.floor_rgb = separate_rgb_values(cub, trimmed);
-    else if (ft_strncmp(trimmed, "C", 1) == 0)
-        cub->map.ceiling_rgb = separate_rgb_values(cub, trimmed);
-    free(trimmed);
+	*dst = trimmed;
 }
 
-int is_config_line(char *trimmed)
+void	parse_config(char *line, t_game *cub, int *map_started)
 {
-    return (!ft_strncmp(trimmed, "NO ", 3) || 
-            !ft_strncmp(trimmed, "SO ", 3) || 
-            !ft_strncmp(trimmed, "WE ", 3) || 
-            !ft_strncmp(trimmed, "EA ", 3) || 
-            !ft_strncmp(trimmed, "F ", 2) || 
-            !ft_strncmp(trimmed, "C ", 2));
+	// char	*trimmed;
+
+	if ((*map_started))
+	{
+		free(line);
+		purge_gnl(cub->map.fd);
+		close(cub->map.fd);
+		error_exit(cub, "Map content must be last");
+	}
+	// trimmed = ft_strtrim(line, " ");
+	while (*line && (*line == ' ' || *line == '\t'))
+		++line;
+	if (ft_strncmp(line, "NO", 2) == 0)
+		extract_path(line, 2, &cub->map.no_texture, cub);
+	else if (ft_strncmp(line, "SO", 2) == 0)
+		extract_path(line, 2, &cub->map.so_texture, cub);
+	else if (ft_strncmp(line, "WE", 2) == 0)
+		extract_path(line, 2, &cub->map.we_texture, cub);
+	else if (ft_strncmp(line, "EA", 2) == 0)
+		extract_path(line, 2, &cub->map.ea_texture, cub);
+	else if (ft_strncmp(line, "F", 1) == 0)
+		cub->map.floor_rgb = parse_rgb_line(cub, line);
+	else if (ft_strncmp(line, "C", 1) == 0)
+		cub->map.ceiling_rgb = parse_rgb_line(cub, line);
+	// free(trimmed);
+}
+
+int	is_config_line(char *s)
+{
+	while (*s == ' ' || *s == '\t')
+		++s;
+	return (!ft_strncmp(s, "NO ", 3) || !ft_strncmp(s, "SO ", 3)
+		|| !ft_strncmp(s, "WE ", 3) || !ft_strncmp(s, "EA ", 3)
+		|| !ft_strncmp(s, "F ", 2) || !ft_strncmp(s, "C ", 2));
 }

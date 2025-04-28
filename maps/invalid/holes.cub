@@ -1,5 +1,16 @@
-11111
-1 001
-11001
-1W001
-11111
+NO ./textures/test/north.xpm
+SO ./textures/test/south.xpm
+WE ./textures/test/west.xpm
+EA ./textures/test/east.xpm
+
+C 20, 20, 20
+F 60, 60, 60
+
+111111111111
+1         11
+1       0001
+1000000 0011
+10S000000001
+111111111111
+11         1
+111111111111
