@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
 /*   Updated: 2025/04/27 17:38:48 by oprosvir         ###   ########.fr       */
@@ -90,7 +90,6 @@ int	main(int argc, char **argv)
 	check_args(argc, argv);
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
-	validate_map_content(&cub);
 	print_data(&cub);
 	init_window(&cub, WIN_TITLE);
 	load_textures(&cub);

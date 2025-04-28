@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:40:13 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 15:07:36 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:20:28 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void    calculate_grid_dimensions(t_game *cub)
     current = cub->map.temp_list;
     max_width = 0;
     height = 0;
-    while (current)
+    while (current && !line_is_empty(current->line))
     {
         height++;
         if ((int)ft_strlen(current->line) > max_width)
@@ -39,7 +39,7 @@ void    calculate_grid_dimensions(t_game *cub)
     cub->map.width = max_width;
 }
 
-void    fill_and_pad_grid_lines(t_game *cub)
+void    fill_grid(t_game *cub)
 {
     t_map_node  *current;
     int         i;
@@ -51,7 +51,7 @@ void    fill_and_pad_grid_lines(t_game *cub)
     {
         cub->map.grid[i] = malloc((cub->map.width + 1));
         if (!cub->map.grid[i])
-            error_exit(cub, "malloc fail");
+            error_exit(cub, "Malloc failed");
         line_len = ft_strlen(current->line);
         ft_memset(cub->map.grid[i], ' ', cub->map.width);
         ft_memcpy(cub->map.grid[i], current->line, line_len);
@@ -66,9 +66,7 @@ void    save_map_to_grid(t_game *cub)
     calculate_grid_dimensions(cub);
     cub->map.grid = malloc(sizeof(char*) * (cub->map.height + 1));
     if (!cub->map.grid)
-        error_exit(cub, "malloc fail");
-    fill_and_pad_grid_lines(cub);
+        error_exit(cub, "Malloc failed");
+    fill_grid(cub);
     cub->map.grid[cub->map.height] = NULL;
-    // if (cub->map.temp_list)
-    //     free_tmp_list(cub->map.temp_list);
 }

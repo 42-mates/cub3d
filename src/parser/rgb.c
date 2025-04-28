@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
 /*   Updated: 2025/04/27 19:57:05 by oprosvir         ###   ########.fr       */

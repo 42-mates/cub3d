@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
 /*   Updated: 2025/04/27 22:50:55 by oprosvir         ###   ########.fr       */
@@ -154,6 +154,26 @@ int 			is_config_line(char *trimmed);
 void    		parse_config(char *line, t_game *cub);
 int				separate_rgb_values(t_game *cub, char *line);
 void    		save_map_to_grid(t_game *cub);
+char    		*open_file(char *file_name, t_game *cub);
+void    		identify_line_type(char *line, t_game *cub, int *map_started);
+void    		map_list_append(t_game *cub, char *line, t_map_node **head);
+void    		remove_newline(char *line);
+int 			is_map_line(char *line);
+int 			line_is_empty(char *line);
+void 			validate_map_lines(t_game *cub, t_map_node *head);
+int     		line_has_invalid_chars(char *line);
+int 			append_players(char *line);
+void    		validate_tiles(t_game *cub);
+int 			has_invalid_neighbor(int y, int x, t_map *map);
+int 			is_config_line(char *trimmed);
+void    		parse_config(char *line, t_game *cub, int *map_started);
+char    		*extract_path(char *trimmed, int i);
+int 			convert_rgb_to_int(int red, int green, int blue);
+int				separate_rgb_values(t_game *cub, char *line);
+void    		save_map_to_grid(t_game *cub);
+void    		calculate_grid_dimensions(t_game *cub);
+void			check_map_size(t_game *cub, int w, int h);
+void    		fill_grid(t_game *cub);
 
 // render
 void			set_player_direction(t_game *cub, char c);

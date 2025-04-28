@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 15:02:38 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 00:20:08 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int line_is_empty(char *line)
-{
-    int i;
-
-    i = 0;
-    while (line[i])
-    {
-        if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-            return (0);
-        i++;
-    }
-    return (1);
-}
-
-int is_map_line(char *line)
-{
-    char    *trimmed;
-    int     is_map_line;
-
-    is_map_line = 0;
-    trimmed = ft_strtrim(line, " ");
-    if (trimmed[0] == '0' || trimmed[0] == '1')
-        is_map_line = 1;
-    free(trimmed);
-    return (is_map_line);
-}
 
 void    map_list_append(t_game *cub, char *line, t_map_node **head)
 {
@@ -46,7 +19,7 @@ void    map_list_append(t_game *cub, char *line, t_map_node **head)
     
     new_node = malloc(sizeof(t_map_node));
     if (!new_node)
-        error_exit(cub, "malloc failed");
+        error_exit(cub, "Malloc failed");
     new_node->line = ft_strdup(line);
     new_node->next = NULL;
     if (*head == NULL)
@@ -85,39 +58,26 @@ char    *open_file(char *file_name, t_game *cub)
     return (line);
 }
 
-void    identify_line_type(char *line, t_game *cub)
-{
-    if (is_config_line(line))
-        parse_config(line, cub);
-    else if (is_map_line(line))
-        map_list_append(cub, line, &cub->map.temp_list);
-    else if (!line_is_empty(line))
-    {
-        printf("Error\nInvalid line in .cub file: %s\n", line);
-        free(line);
-        purge_gnl(cub->map.fd);
-        close(cub->map.fd);
-        exit_code(cub, 1);
-    }
-}
-
 void    parse_scene_file(char *file_name, t_game *cub)
 {
     char    *line;
+    int     map_started;
+    // int     map_ended;
 
     line = open_file(file_name, cub);
+    map_started = 0;
+    // map_ended = 0;
     while (line)
     {
-        if (line_is_empty(line))
-        {
-            free(line);
-            line = get_next_line(cub->map.fd);
-            continue;
-        }
+        // if (line_is_empty(line) && map_started)
+        //     map_ended = 1;
         remove_newline(line);
-        identify_line_type(line, cub);
+        identify_line_type(line, cub, &map_started);
         free(line);
         line = get_next_line(cub->map.fd);
     }
+    validate_map_lines(cub, cub->map.temp_list);
+    save_map_to_grid(cub);
+    validate_tiles(cub);
     close(cub->map.fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/25 14:28:28 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:10:48 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@ char    *extract_path(char *trimmed, int i)
     return (ft_substr(trimmed, i, ft_strlen(trimmed) - i));
 }
 
-void    parse_config(char *line, t_game *cub)
+void    parse_config(char *line, t_game *cub, int *map_started)
 {
     char    *trimmed;
 
+    if ((*map_started))
+    {
+        printf("Error\nMap content must be last\n");
+        free(line);
+        purge_gnl(cub->map.fd);
+        close(cub->map.fd);
+        exit_code(cub, 1);
+    }
     trimmed = ft_strtrim(line, " ");
     if (ft_strncmp(trimmed, "NO", 2) == 0)
         cub->map.no_texture = extract_path(trimmed, 2);
