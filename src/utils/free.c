@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:14:35 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 00:15:02 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:37:25 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-void    free_tmp_list(t_map_node *head)
+void	free_tmp_list(t_map_node *head)
 {
-    t_map_node  *current;
-    t_map_node  *tmp;
+	t_map_node	*current;
+	t_map_node	*tmp;
 
-    current = head;
-    while (current)
-    {
-        tmp = current;
-        current = current->next;
-        free(tmp->line);
-        free(tmp);
-    }
+	current = head;
+	while (current)
+	{
+		tmp = current;
+		current = current->next;
+		free(tmp->line);
+		free(tmp);
+	}
 }
 
 void	free_map(t_map *m)

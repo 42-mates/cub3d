@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:38:08 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/27 23:04:55 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:38:27 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	get_line_limits(int *start, int *end, int line_h)
 
 static int	get_pixel_color(t_image *wall, int tex_x, int tex_y)
 {
-	int bpp;
-	char *src;
-	
+	int		bpp;
+	char	*src;
+
 	bpp = wall->bpp / 8;
 	src = wall->addr + tex_y * wall->line_len + tex_x * bpp;
 	return (*(int *)src);
@@ -64,7 +64,7 @@ void	draw_wall(t_game *g, int x)
 {
 	t_ray	*ray;
 	int		line_h;
-	
+
 	ray = &g->ray;
 	line_h = (int)(WIN_HEIGHT / ray->wall_dist);
 	if (ray->side == 0)

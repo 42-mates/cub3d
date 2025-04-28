@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 13:04:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:37:16 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	init_window(t_game *cub, char *title)
 	cub->image.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!cub->image.img)
 		error_exit(cub, "Unable to create image");
-	cub->image.addr = mlx_get_data_addr(cub->image.img,
-			&cub->image.bpp, &cub->image.line_len, &cub->image.endian);
+	cub->image.addr = mlx_get_data_addr(cub->image.img, &cub->image.bpp,
+			&cub->image.line_len, &cub->image.endian);
 	if (!cub->image.addr)
 		error_exit(cub, "Unable to get image data address");
 }
@@ -86,8 +86,8 @@ static void	init_game(t_game *cub)
 
 int	main(int argc, char **argv)
 {
-	t_game cub;
-	
+	t_game	cub;
+
 	check_args(argc, argv);
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);

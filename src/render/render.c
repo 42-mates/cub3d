@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 23:18:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:37:50 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ void	put_pixel(t_image *img, int x, int y, int color)
 	}
 }
 
-static void put_text(t_game *cub, char *text, int *y)
+static void	put_text(t_game *cub, char *text, int *y)
 {
 	int	x0;
-	
+
 	x0 = WIN_WIDTH - 220;
 	mlx_string_put(cub->mlx, cub->win, x0 + 1, *y + 1, BLACK, text);
 	mlx_string_put(cub->mlx, cub->win, x0, *y, WHITE, text);
 	*y += 15;
 }
 
-static void draw_controls(t_game *cub)
+static void	draw_controls(t_game *cub)
 {
 	int	y;
-	
+
 	y = 20;
 	put_text(cub, "         CONTROLS", &y);
 	put_text(cub, " ", &y);

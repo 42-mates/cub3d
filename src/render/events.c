@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 19:00:22 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/24 16:53:06 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:38:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ static int	game_loop(t_game *cub)
 
 void	init_hooks(t_game *cub)
 {
-	mlx_hook(cub->win, 2, 1L<<0, key_press, cub);
-	mlx_hook(cub->win, 3, 1L<<1, key_release, cub);
-	mlx_hook(cub->win, 4, 1L<<2, mouse_press, cub);
-	mlx_hook(cub->win, 5, 1L<<3, mouse_release, cub);
-	mlx_hook(cub->win, 6, 1L<<6, mouse_move, cub);
+	mlx_hook(cub->win, 2, 1L << 0, key_press, cub);
+	mlx_hook(cub->win, 3, 1L << 1, key_release, cub);
+	mlx_hook(cub->win, 4, 1L << 2, mouse_press, cub);
+	mlx_hook(cub->win, 5, 1L << 3, mouse_release, cub);
+	mlx_hook(cub->win, 6, 1L << 6, mouse_move, cub);
 	mlx_hook(cub->win, 17, 0L, exit_success, cub);
 	mlx_loop_hook(cub->mlx, game_loop, cub);
 }

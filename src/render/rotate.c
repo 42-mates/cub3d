@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:43:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/21 22:27:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:41:16 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	rotate(t_player *p, double angle)
 int	mouse_press(int button, int x, int y, t_game *cub)
 {
 	(void)y;
-	if (button == 1) // left mouse button
+	if (button == 1)
 	{
 		cub->keys.m_down = 1;
 		cub->keys.x_old = x;
@@ -41,20 +41,20 @@ int	mouse_release(int button, int x, int y, t_game *cub)
 	(void)x;
 	(void)y;
 	if (button == 1)
-        cub->keys.m_down = 0;
+		cub->keys.m_down = 0;
 	return (0);
 }
 
 int	mouse_move(int x, int y, t_game *cub)
 {
-	(void)y;
-    int delta_x;
+	int	delta_x;
 
+	(void)y;
 	if (!cub->keys.m_down)
 		return (0);
 	delta_x = x - cub->keys.x_old;
 	if (delta_x != 0)
 		rotate(&cub->player, delta_x * MOUSE_SENS);
-    cub->keys.x_old = x;
+	cub->keys.x_old = x;
 	return (0);
 }

@@ -6,18 +6,18 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 12:20:49 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:39:16 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    extract_path(char *line, int i, char **dst, t_game *cub)
+void	extract_path(char *line, int i, char **dst, t_game *cub)
 {
-    char    *trimmed;
+	char	*trimmed;
 
-    if (*dst)
-    {
+	if (*dst)
+	{
 		free(line);
 		purge_gnl(cub->map.fd);
 		close(cub->map.fd);
@@ -25,21 +25,19 @@ void    extract_path(char *line, int i, char **dst, t_game *cub)
 	}
 	while (line[i] == ' ')
 		i++;
-    trimmed = ft_substr(line, i, ft_strlen(line) - i);
-    if (!trimmed)
-    {
-        free(line);
+	trimmed = ft_substr(line, i, ft_strlen(line) - i);
+	if (!trimmed)
+	{
+		free(line);
 		purge_gnl(cub->map.fd);
 		close(cub->map.fd);
 		error_exit(cub, "Malloc fail");
-    }
+	}
 	*dst = trimmed;
 }
 
 void	parse_config(char *line, t_game *cub, int *map_started)
 {
-	// char	*trimmed;
-
 	if ((*map_started))
 	{
 		free(line);
@@ -47,7 +45,6 @@ void	parse_config(char *line, t_game *cub, int *map_started)
 		close(cub->map.fd);
 		error_exit(cub, "Map content must be last");
 	}
-	// trimmed = ft_strtrim(line, " ");
 	while (*line && (*line == ' ' || *line == '\t'))
 		++line;
 	if (ft_strncmp(line, "NO", 2) == 0)
@@ -62,7 +59,6 @@ void	parse_config(char *line, t_game *cub, int *map_started)
 		cub->map.floor_rgb = parse_rgb_line(cub, line);
 	else if (ft_strncmp(line, "C", 1) == 0)
 		cub->map.ceiling_rgb = parse_rgb_line(cub, line);
-	// free(trimmed);
 }
 
 int	is_config_line(char *s)
