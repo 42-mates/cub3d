@@ -6,13 +6,14 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/27 23:37:26 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:38:48 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// @mglikenf close(fd) before last exit_failure
+// @mglikenf invalid file descriptor -1 in syscall close()
+//				when can't open file
 static void	check_args(int argc, char **argv)
 {
 	char	*s;
@@ -23,18 +24,14 @@ static void	check_args(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || read(fd, NULL, 0) < 0)
 	{
-		close(fd);
+		if (fd >= 0)
+			close(fd);
 		exit_failure("File does not exist or is a directory");
 	}
 	close(fd);
 	s = ft_strchr(argv[1], '.');
-	if (s)
-	{
-		if (ft_strcmp(s, ".cub") == 0 && ft_strlen(s) == 4)
-			return ;
-	}
-	// close(fd)
-	exit_failure("Invalid file format");
+	if (!s || ft_strcmp(s, ".cub") || ft_strlen(s) != 4)
+		exit_failure("Invalid file format");
 }
 
 static void	init_window(t_game *cub, char *title)
@@ -49,8 +46,7 @@ static void	init_window(t_game *cub, char *title)
 	if (!cub->image.img)
 		error_exit(cub, "Unable to create image");
 	cub->image.addr = mlx_get_data_addr(cub->image.img,
-			&cub->image.bits_per_pixel, &cub->image.line_length,
-			&cub->image.endian);
+			&cub->image.bpp, &cub->image.line_len, &cub->image.endian);
 	if (!cub->image.addr)
 		error_exit(cub, "Unable to get image data address");
 }
@@ -85,18 +81,6 @@ static void	init_game(t_game *cub)
 	ft_bzero(cub, sizeof(t_game));
 	cub->map_scale = MINIMAP_SCALE;
 	cub->controls = 1;
-	init_window(cub, WIN_TITLE);
-}
-
-static void load_texture(t_game *cub, t_tex *tex, char *path)
-{
-    tex->img.img = mlx_xpm_file_to_image(cub->mlx, path, &tex->w, &tex->h);
-    if (!tex->img.img)
-		error_exit(cub, "failed to load texture");
-	tex->img.addr = mlx_get_data_addr(tex->img.img,
-                              &tex->img.bits_per_pixel,
-                              &tex->img.line_length,
-                              &tex->img.endian);
 }
 
 int	main(int argc, char **argv)
@@ -107,11 +91,11 @@ int	main(int argc, char **argv)
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
 	print_data(&cub);
-	load_texture(&cub, &cub.wall, cub.map.no_texture);
+	init_window(&cub, WIN_TITLE);
+	load_textures(&cub);
 	get_player_position(&cub);
 	render_frame(&cub);
 	init_hooks(&cub);
 	mlx_loop(cub.mlx);
-	
 	return (EXIT_SUCCESS);
 }

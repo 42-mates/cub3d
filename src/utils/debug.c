@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 23:50:55 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/24 14:48:31 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 23:17:03 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	print_image_data(const t_image *image)
 	printf("Image Data:\n");
 	printf("  img: %p\n", image->img);
 	printf("  addr: %p\n", image->addr);
-	printf("  bits_per_pixel: %d\n", image->bits_per_pixel);
-	printf("  line_length: %d\n", image->line_length);
+	printf("  bits_per_pixel: %d\n", image->bpp);
+	printf("  line_length: %d\n", image->line_len);
 	printf("  endian: %d\n", image->endian);
 	printf("\n");
 }

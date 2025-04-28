@@ -6,6 +6,7 @@ INCDIR			= include/
 SRCS			= src/main.c \
 				  src/render/render.c \
 				  src/render/raycasting.c \
+				  src/render/texture.c \
 				  src/render/draw.c \
 				  src/render/player.c \
 				  src/render/minimap.c \

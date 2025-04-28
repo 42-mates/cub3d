@@ -6,46 +6,102 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 00:18:27 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:57:05 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int convert_rgb_to_int(int red, int green, int blue)
+static int skip_ws(const char *s, int i)
 {
-	int color;
-
-	if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) 
-		return (-1);
-	color = (red << 16) | (green << 8) | blue;
-	return (color);
+	if (!s)
+		return (i);
+	while (s[i] == ' ' || s[i] == '\t')
+		++i;
+	return (i);
 }
 
-// check for substrings validated
-int separate_rgb_values(t_game *cub, char *line)
+static int  parse_component(char *tok, t_game *cub)
 {
-	char	**rgb;
-	char	*tmp;
-	int		i;
-	int		value;
+	int i;
+	long n;
+	
+	if (!tok)
+		error_exit(cub, "RGB: split failed");
+	i = skip_ws(tok, 0);
+	if (!ft_isdigit(tok[i]))
+		error_exit(cub, "RGB values must be positive integers (0-255)");
+	n = 0;
+	while (ft_isdigit(tok[i]))
+		n = n * 10 + (tok[i++] - '0');
+	i = skip_ws(tok, i);
+	if (tok[i] != '\0')
+		error_exit(cub, "RGB: invalid character");
+	if (n > 255)
+		error_exit(cub, "RGB value out of range 0-255");
+	return ((int)n);
+}
 
-	i = 0;
-	while (!ft_isdigit(line[i]))
-		i++;
-	tmp = ft_substr(line, i, ft_strlen(line) - i);
-	if (!tmp)
-		error_exit(cub, "Malloc failed");
-	rgb = ft_split(tmp, ',');
-	free(tmp);
-	if (!rgb)
-		error_exit(cub, "Malloc failed");
-	value = convert_rgb_to_int(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
-	if (value == -1  || !rgb[0] || !rgb[1] || !rgb[2])
-	{
-		free_tab(rgb);
-		error_exit(cub, "RGB values must be between 0 and 255");
-	}
+// @mglikenf	bugs fixed
+//				return color (not only separate rgb val) 
+//				func name parse_rgb_line / parse_rgb
+int  separate_rgb_values(t_game *cub, char *line)
+{
+	char **rgb;
+	int r;
+	int g;
+	int b;
+	
+	++line;
+	while (*line && (*line == ' ' || *line == '\t'))
+		++line;
+	if (!ft_isdigit(*line))
+		error_exit(cub, "RGB values must be positive integers (0-255)");
+	rgb = ft_split(line, ',');
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
+		error_exit(cub, "RGB: need exactly three numbers");
+	r = parse_component(rgb[0], cub);
+	g = parse_component(rgb[1], cub);
+	b = parse_component(rgb[2], cub);
 	free_tab(rgb);
-	return (value);
+	return ((r << 16) | (g << 8) | b);
 }
+
+// int rgb_to_int(int r, int g, int b)
+// {
+// 	int color;
+
+// 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+// 		return (-1);
+// 	color = (r << 16) | (g << 8) | b;
+// 	return (color);
+// }
+
+// // empty line after ident = segfault
+// // skips simbols before/after number
+// // negative num
+// int separate_rgb_values(t_game *cub, char *line)
+// {
+// 	char	**rgb;
+// 	char	*tmp;
+// 	int		i;
+// 	int		value;
+
+// 	i = 0;
+// 	while (!ft_isdigit(line[i]))
+// 		i++;
+// 	tmp = ft_substr(line, i, ft_strlen(line) - i);
+// 	if (!tmp)
+// 		error_exit(cub, "Malloc failed");
+// 	rgb = ft_split(tmp, ',');
+// 	free(tmp);
+// // 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
+// //		error_exit(cub, "Malloc failed");
+// 	if (!rgb)
+// 		error_exit(cub, "Malloc failed");
+// 	value = rgb_to_int(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2])); 
+// 	free_tab(rgb);
+// 	if (value == -1  || !rgb[0] || !rgb[1] || !rgb[2]) // invalid read
+// 		error_exit(cub, "RGB values must be between 0 and 255");
+// 	return (value);
+// }

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:56:37 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 14:38:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 00:12:03 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_code(t_game *cub, int code)
 	if (!cub)
 		exit(code);
 	free_map(&cub->map);
+	free_textures(cub);
 	if (cub->image.img)
 		mlx_destroy_image(cub->mlx, cub->image.img);
 	if (cub->win)

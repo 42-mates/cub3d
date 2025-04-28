@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 02:01:16 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/24 17:55:38 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/25 23:18:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	put_pixel(t_image *img, int x, int y, int color)
 
 	if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
 	{
-		offset = (x * img->bits_per_pixel / 8) + (y * img->line_length);
+		offset = (x * img->bpp / 8) + (y * img->line_len);
 		*(int *)(img->addr + offset) = color;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 00:14:35 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:50:55 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,35 +84,24 @@ typedef struct s_player
 	double		plane_y;
 }				t_player;
 
-typedef struct s_image
+typedef struct	s_image
 {
 	void		*img;
 	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
+	int			w;
+	int			h;
+	int			bpp;
+	int			line_len;
 	int			endian;
 }				t_image;
 
-typedef struct s_tex
+typedef struct	s_tex
 {
-	t_image		img;
-	int			w;
-	int			h;
+	t_image		*no;
+	t_image		*so;
+	t_image		*we;
+	t_image		*ea;
 }				t_tex;
-
-typedef struct s_game
-{
-	void		*mlx;
-	void		*win;
-	int			minimap;
-	int			map_scale;
-	int			controls;
-	t_image		image;
-	t_player	player;
-	t_keys		keys;
-	t_map		map;
-	t_tex		wall;
-}				t_game;
 
 typedef struct s_ray
 {
@@ -131,11 +120,27 @@ typedef struct s_ray
 	double		wall_dist;
 }				t_ray;
 
+typedef struct s_game
+{
+	void		*mlx;
+	void		*win;
+	int			minimap;
+	int			map_scale;
+	int			controls;
+	t_image		image;
+	t_player	player;
+	t_keys		keys;
+	t_map		map;
+	t_ray		ray;
+	t_tex		tex;
+}				t_game;
+
 // main, init & exit
+void			load_textures(t_game *cub);
 void			init_hooks(t_game *cub);
 void			free_tab(char **tab);
 void			free_map(t_map *m);
-void    		free_tmp_list(t_map_node *head);
+void			free_textures(t_game *cub);
 void			error_exit(t_game *cub, const char *msg);
 void			exit_code(t_game *cub, int code);
 int				exit_success(t_game *cub);
@@ -144,6 +149,11 @@ void			purge_gnl(int fd);
 
 // map & config parser
 void    		parse_scene_file(char *file_name, t_game *cub);
+void			validate_map_content(t_game *cub);
+int 			is_config_line(char *trimmed);
+void    		parse_config(char *line, t_game *cub);
+int				separate_rgb_values(t_game *cub, char *line);
+void    		save_map_to_grid(t_game *cub);
 char    		*open_file(char *file_name, t_game *cub);
 void    		identify_line_type(char *line, t_game *cub, int *map_started);
 void    		map_list_append(t_game *cub, char *line, t_map_node **head);
@@ -179,11 +189,12 @@ void			move_backward(t_game *cub);
 void			strafe_right(t_game *cub);
 void			strafe_left(t_game *cub);
 void			render_rays(t_game *cub);
-//void			draw_wall_slice(t_game *cub, int x, double dist, int side);
-void			draw_wall_slice(t_game *cub, t_ray *ray, int x);
+void			draw_wall(t_game *cub, int x);
+int				get_tex_y(int y, int line_h, int tex_h);
+int				get_tex_x(t_ray *ray, t_image *wall, t_player *player);
+int				clamp_int(int value, int min, int max);
 
 // debug
 void			print_data(const t_game *cub);
-void    		print_temp_list(t_map_node *map_lines);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:14:35 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/25 14:19:36 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/26 00:15:02 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,21 @@ void	free_map(t_map *m)
 	}
 }
 
+static void	free_tex(t_game *cub, t_image **tex)
+{
+	if (*tex)
+	{
+		if ((*tex)->img)
+			mlx_destroy_image(cub->mlx, (*tex)->img);
+		free(*tex);
+		*tex = NULL;
+	}
+}
+
+void	free_textures(t_game *cub)
+{
+	free_tex(cub, &cub->tex.no);
+	free_tex(cub, &cub->tex.so);
+	free_tex(cub, &cub->tex.we);
+	free_tex(cub, &cub->tex.ea);
+}
