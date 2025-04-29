@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 01:39:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2023/05/22 01:39:15 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:51:15 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,16 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*last;
+	const char	*last;
 
 	last = NULL;
 	while (*s)
 	{
 		if (*s == (char)c)
-		{
-			last = (char *)s;
-		}
+			last = s;
 		s++;
 	}
-	if (last)
-	{
-		return (last);
-	}
-	if (c == '\0')
-	{
+	if ((char)c == '\0')
 		return ((char *)s);
-	}
-	return (NULL);
+	return ((char *)last);
 }

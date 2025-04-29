@@ -6,11 +6,17 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 19:00:22 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 14:38:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:57:33 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	exit_success(t_game *cub)
+{
+	exit_code(cub, EXIT_SUCCESS);
+	return (0);
+}
 
 static int	key_press(int keycode, t_game *cub)
 {

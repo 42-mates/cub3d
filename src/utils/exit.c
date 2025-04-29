@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:56:37 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/29 14:51:54 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:27:26 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ void	exit_failure(char *msg)
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(msg, 2);
 	exit(1);
-}
-
-int	exit_success(t_game *cub)
-{
-	exit_code(cub, EXIT_SUCCESS);
-	return (0);
 }
 
 void	purge_gnl(int fd)

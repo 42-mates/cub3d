@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/29 14:52:44 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:28:00 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ void					free_map(t_map *m);
 void					free_textures(t_game *cub);
 void					error_exit(t_game *cub, const char *msg);
 void					exit_code(t_game *cub, int code);
-int						exit_success(t_game *cub);
 void					exit_failure(char *msg);
 void					purge_gnl(int fd);
 void					error_close_exit(t_game *cub, char *msg);

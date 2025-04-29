@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 14:37:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:45:32 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	check_args(int argc, char **argv)
 		exit_failure("File does not exist or is a directory");
 	}
 	close(fd);
-	s = ft_strchr(argv[1], '.');
+	s = ft_strrchr(argv[1], '.');
 	if (!s || ft_strcmp(s, ".cub") || ft_strlen(s) != 4)
 		exit_failure("Invalid file format");
 }
