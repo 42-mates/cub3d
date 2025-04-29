@@ -1,7 +1,6 @@
 /* XPM */
 static char * north_xpm[] = {
 "64 64 109 2",
-"  	c #FFFFFF",
 ". 	c #FEFEFE",
 "+ 	c #DBDBDB",
 "@ 	c #B5B5B5",

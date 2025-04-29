@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 14:38:32 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:13:48 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	has_invalid_neighbor(int y, int x, t_map *map)
 {
 	if (y == 0 || y >= map->height - 1 || x == 0 || x >= map->width - 1)
 	{
-		printf("tile (x=%d, y=%d) is located on edge of the map\n", x, y);
+		printf("tile (x=%d, y=%d) is located on edge of the map\n", x, y); //delete later
 		return (1);
 	}
 	if (map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' '
