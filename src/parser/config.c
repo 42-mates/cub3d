@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 14:39:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:53:43 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void	extract_path(char *line, int i, char **dst, t_game *cub)
 	if (*dst)
 	{
 		free(line);
-		purge_gnl(cub->map.fd);
-		close(cub->map.fd);
-		error_exit(cub, "Double config line");
+		error_close_exit(cub, "Double config line");
 	}
 	while (line[i] == ' ')
 		i++;
@@ -29,9 +27,7 @@ void	extract_path(char *line, int i, char **dst, t_game *cub)
 	if (!trimmed)
 	{
 		free(line);
-		purge_gnl(cub->map.fd);
-		close(cub->map.fd);
-		error_exit(cub, "Malloc fail");
+		error_close_exit(cub, "Malloc fail");
 	}
 	*dst = trimmed;
 }
@@ -41,9 +37,7 @@ void	parse_config(char *line, t_game *cub, int *map_started)
 	if ((*map_started))
 	{
 		free(line);
-		purge_gnl(cub->map.fd);
-		close(cub->map.fd);
-		error_exit(cub, "Map content must be last");
+		error_close_exit(cub, "Map content must be last");
 	}
 	while (*line && (*line == ' ' || *line == '\t'))
 		++line;
@@ -56,9 +50,9 @@ void	parse_config(char *line, t_game *cub, int *map_started)
 	else if (ft_strncmp(line, "EA", 2) == 0)
 		extract_path(line, 2, &cub->map.ea_texture, cub);
 	else if (ft_strncmp(line, "F", 1) == 0)
-		cub->map.floor_rgb = parse_rgb_line(cub, line);
+		cub->map.floor_rgb = parse_rgb_line(cub, line, &cub->map.floor_rgb);
 	else if (ft_strncmp(line, "C", 1) == 0)
-		cub->map.ceiling_rgb = parse_rgb_line(cub, line);
+		cub->map.ceiling_rgb = parse_rgb_line(cub, line, &cub->map.ceiling_rgb);
 }
 
 int	is_config_line(char *s)

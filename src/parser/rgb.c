@@ -3,87 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 14:18:54 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:09:30 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	skip_ws(const char *s, int i)
+static char *check_syntax(char *trimmed, char *temp, int n)
 {
-	if (!s)
-		return (i);
-	while (s[i] == ' ' || s[i] == '\t')
-		++i;
-	return (i);
-}
-
-static int	parse_component(char *tok, t_game *cub, char **rgb, char *tmp)
-{
-	int		i;
-	long	n;
-
-	if (!tok)
-		error_exit(cub, "RGB: split failed");
-	i = skip_ws(tok, 0);
-	if (!ft_isdigit(tok[i]))
-	{
-		free(tmp);
-		free_tab(rgb);
-		purge_gnl(cub->map.fd);
-		error_exit(cub, "RGB values must be positive integers (0-255)");
-	}
-	n = 0;
-	while (ft_isdigit(tok[i]))
-		n = n * 10 + (tok[i++] - '0');
-	i = skip_ws(tok, i);
-	if (tok[i] != '\0')
-		error_exit(cub, "RGB: invalid character");
+	if (ft_strchr(trimmed, '+'))
+		return ("'+' symbol in RGB values is rejected");
+	if (ft_strcmp(trimmed, temp) || ft_strchr(trimmed, '-'))
+		return ("RGB values must be positive integers (0-255)");
 	if (n > 255)
-		error_exit(cub, "RGB value out of range 0-255");
-	return ((int)n);
+		return ("RGB value out of range 0-255");
+	return (NULL);
 }
 
-char	**tokenize_rgb(char *line, t_game *cub, char *tmp)
+static int	parse_component(char *trimmed, t_game *cub, char **rgb, char *line)
+{
+	char	*temp;
+	char	*msg;
+	int		n;
+
+	n = ft_atoi(trimmed);
+	temp = ft_itoa(n);
+	msg = check_syntax(trimmed, temp, n);
+	if (msg != NULL)
+	{
+		free(line);
+		free(temp);
+		free(trimmed);
+		free_tab(rgb);
+		error_close_exit(cub, msg);
+	}
+	free(trimmed);
+	free(temp);
+	return (n);
+}
+
+static int	convert_rgb(char *line, t_game *cub, char *tmp)
 {
 	char	**rgb;
+	int		r;
+	int		g;
+	int		b;
 
 	rgb = ft_split(line, ',');
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 	{
 		free(tmp);
 		free_tab(rgb);
-		purge_gnl(cub->map.fd);
-		error_exit(cub, "RGB: need exactly three numbers");
+		error_close_exit(cub, "RGB: need exactly three numbers");
 	}
-	return (rgb);
+	r = parse_component(ft_strtrim(rgb[0], " "), cub, rgb, tmp);
+	g = parse_component(ft_strtrim(rgb[1], " "), cub, rgb, tmp);
+	b = parse_component(ft_strtrim(rgb[2], " "), cub, rgb, tmp);
+	free_tab(rgb);
+	return ((r << 16) | (g << 8) | b);
 }
 
-int	parse_rgb_line(t_game *cub, char *line)
+int	parse_rgb_line(t_game *cub, char *line, int *dst)
 {
-	char	**rgb;
-	int		r;
-	int		g;
-	int		b;
 	char	*tmp;
+	int		rgb;
 
 	tmp = line;
+	if (*dst != -1)
+	{
+		free(tmp);
+		error_close_exit(cub, "Double config line");
+	}
 	++line;
 	while (*line && (*line == ' ' || *line == '\t'))
 		++line;
-	if (!ft_isdigit(*line))
-	{
-		free(tmp);
-		purge_gnl(cub->map.fd);
-		error_exit(cub, "RGB values must be positive integers (0-255)");
-	}
-	rgb = tokenize_rgb(line, cub, tmp);
-	r = parse_component(rgb[0], cub, rgb, tmp);
-	g = parse_component(rgb[1], cub, rgb, tmp);
-	b = parse_component(rgb[2], cub, rgb, tmp);
-	free_tab(rgb);
-	return ((r << 16) | (g << 8) | b);
+	rgb = convert_rgb(line, cub, tmp);
+	return (rgb);
 }

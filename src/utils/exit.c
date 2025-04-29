@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:56:37 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/26 00:12:03 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:51:54 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,11 @@ void	purge_gnl(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
+}
+
+void	error_close_exit(t_game *cub, char *msg)
+{
+	purge_gnl(cub->map.fd);
+	close(cub->map.fd);
+	error_exit(cub, msg);
 }
