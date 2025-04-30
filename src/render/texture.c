@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 23:51:20 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 14:37:39 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:47:35 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ int	get_tex_x(t_ray *ray, t_image *wall, t_player *player)
 	return (tex_x);
 }
 
+static void	check_texture_size(t_game *cub, t_image *tex)
+{
+	if (tex->w > MAX_TEX || tex->h > MAX_TEX)
+	{
+		mlx_destroy_image(cub->mlx, tex->img);
+		free(tex);
+		error_exit(cub, "Texture too large (max 800x800)");
+	}
+}
+
 static t_image	*load_texture(t_game *cub, char *path)
 {
 	t_image	*tex;
@@ -55,6 +65,7 @@ static t_image	*load_texture(t_game *cub, char *path)
 		free(tex);
 		error_exit(cub, "Failed to load texture");
 	}
+	check_texture_size(cub, tex);
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len,
 			&tex->endian);
 	if (!tex->addr)
