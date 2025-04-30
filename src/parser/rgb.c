@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/29 18:09:30 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:48:01 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	parse_rgb_line(t_game *cub, char *line, int *dst)
 	if (*dst != -1)
 	{
 		free(tmp);
-		error_close_exit(cub, "Double config line");
+		error_close_exit(cub, "Duplicate configuration for color");
 	}
 	++line;
 	while (*line && (*line == ' ' || *line == '\t'))

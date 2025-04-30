@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/29 22:28:00 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:50:52 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,8 @@ void					map_list_append(t_game *cub, char *line,
 int						line_is_empty(char *line);
 void					validate_map_lines(t_game *cub, t_map_node *head);
 void					validate_tiles(t_game *cub);
-int						is_config_line(char *trimmed);
-void					parse_config(char *line, t_game *cub, int *map_started);
+int						is_config_line(char *s);
+void					parse_config(char *line, t_game *cub);
 int						parse_rgb_line(t_game *cub, char *line, int *dst);
 void					save_map_to_grid(t_game *cub);
 

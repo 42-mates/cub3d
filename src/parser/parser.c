@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 15:22:34 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:38:34 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	parse_scene_file(char *file_name, t_game *cub)
 	map_ended = 0;
 	while (line)
 	{
-		if (line_is_empty(line) && map_started)
-			map_ended = 1;
 		remove_newline(line);
 		identify_line_type(line, cub, &map_started, &map_ended);
 		free(line);

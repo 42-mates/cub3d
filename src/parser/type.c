@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 15:26:13 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:26:12 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,29 @@ int	is_map_line(char *line)
 	return (is_map_line);
 }
 
-void	identify_line_type(char *line, t_game *cub, int *map_started,
-		int *map_ended)
+void	identify_line_type(char *line, t_game *cub, int *map_started, int *map_ended)
 {
-	if (!(*map_started) && line_is_empty(line))
+	if (line_is_empty(line))
+	{
+		if (*map_started && !(*map_ended))
+			*map_ended = 1;
 		return ;
-	if ((*map_ended) && line_is_empty(line))
+	}
+	if (*map_ended)
 	{
 		free(line);
-		error_close_exit(cub, "Detected symbols after map");
+		error_close_exit(cub, "Detected lines after map");
 	}
-	if (is_config_line(line))
-		parse_config(line, cub, map_started);
-	else if (is_map_line(line) || line_is_empty(line))
+	if (!(*map_ended) && is_config_line(line))
+		parse_config(line, cub);
+	else if (is_map_line(line))
 	{
 		*map_started = 1;
 		map_list_append(cub, line, &cub->map.temp_list);
 	}
-	else if (!line_is_empty(line))
+	else
 	{
 		free(line);
-		error_close_exit(cub, "Invalid line in .cub file");
+		error_close_exit(cub, "Unexpected line in .cub file");
 	}
 }

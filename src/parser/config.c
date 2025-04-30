@@ -6,49 +6,50 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/29 14:53:43 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:15:38 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	extract_path(char *line, int i, char **dst, t_game *cub)
+void	extract_path(char *line, char **dst, t_game *cub)
 {
-	char	*trimmed;
+	char	**subs;
 
 	if (*dst)
 	{
 		free(line);
-		error_close_exit(cub, "Double config line");
+		error_close_exit(cub, "Duplicate configuration for texture");
 	}
-	while (line[i] == ' ')
-		i++;
-	trimmed = ft_substr(line, i, ft_strlen(line) - i);
-	if (!trimmed)
+	subs = ft_split(line, ' ');
+	if (!subs || !subs[0] || !subs[1] || subs[2])
 	{
 		free(line);
-		error_close_exit(cub, "Malloc fail");
+		free_tab(subs);
+		error_close_exit(cub, "Invalid texture line format");
 	}
-	*dst = trimmed;
+	*dst = ft_strdup(subs[1]);
+	if (!(*dst))
+	{
+		free(line);
+		free_tab(subs);
+		error_close_exit(cub, "Malloc failed");
+	}
+	free_tab(subs);
 }
 
-void	parse_config(char *line, t_game *cub, int *map_started)
+void	parse_config(char *line, t_game *cub)
 {
-	if ((*map_started))
-	{
-		free(line);
-		error_close_exit(cub, "Map content must be last");
-	}
 	while (*line && (*line == ' ' || *line == '\t'))
 		++line;
 	if (ft_strncmp(line, "NO", 2) == 0)
-		extract_path(line, 2, &cub->map.no_texture, cub);
+		extract_path(line, &cub->map.no_texture, cub);
 	else if (ft_strncmp(line, "SO", 2) == 0)
-		extract_path(line, 2, &cub->map.so_texture, cub);
+		extract_path(line, &cub->map.so_texture, cub);
 	else if (ft_strncmp(line, "WE", 2) == 0)
-		extract_path(line, 2, &cub->map.we_texture, cub);
+		extract_path(line, &cub->map.we_texture, cub);
 	else if (ft_strncmp(line, "EA", 2) == 0)
-		extract_path(line, 2, &cub->map.ea_texture, cub);
+		extract_path(line, &cub->map.ea_texture, cub);
 	else if (ft_strncmp(line, "F", 1) == 0)
 		cub->map.floor_rgb = parse_rgb_line(cub, line, &cub->map.floor_rgb);
 	else if (ft_strncmp(line, "C", 1) == 0)
