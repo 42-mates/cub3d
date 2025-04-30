@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/29 23:13:48 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:29:35 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	append_players(char *line)
+static int	append_players(char *line)
 {
-	char	*orientation_set;
+	char	*set;
 	int		i;
 	int		count;
 
-	orientation_set = "NEWS";
+	set = "NEWS";
 	i = 0;
 	count = 0;
 	while (line[i])
 	{
-		if (ft_strchr(orientation_set, line[i]))
+		if (ft_strchr(set, line[i]))
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-int	line_has_invalid_chars(char *line)
+static int	line_has_invalid_chars(char *line)
 {
 	char	*valid_set;
 	int		i;
@@ -64,17 +64,27 @@ void	validate_map_lines(t_game *cub, t_map_node *head)
 		error_exit(cub, "Number of players must be exactly one");
 }
 
-int	has_invalid_neighbor(int y, int x, t_map *map)
+static void	check_neighbors(int y, int x, t_game *cub)
 {
-	if (y == 0 || y >= map->height - 1 || x == 0 || x >= map->width - 1)
+	int	up;
+	int	down;
+	int	left;
+	int	right;
+
+	if (y == 0 || y >= cub->map.height - 1 || x == 0 || x >= cub->map.width - 1)
 	{
-		printf("tile (x=%d, y=%d) is located on edge of the map\n", x, y); //delete later
-		return (1);
+		if (ft_strchr("NSWE", cub->map.grid[y][x]))
+			error_exit(cub, "Map is invalid: player is located on the edge of the map");
+		else if (cub->map.grid[y][x] == '0')
+			error_exit(cub, "Map is invalid: walkable tile on the edge");
+		
 	}
-	if (map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' '
-		|| map->grid[y][x - 1] == ' ' || map->grid[y][x + 1] == ' ')
-		return (1);
-	return (0);
+	up = cub->map.grid[y - 1][x];
+	down = cub->map.grid[y + 1][x];
+	left = cub->map.grid[y][x - 1];
+	right = cub->map.grid[y][x + 1];
+	if (up == ' ' || down == ' ' || left == ' ' || right == ' ')
+		error_exit(cub, "Map is invalid: a hole in the wall");
 }
 
 void	validate_tiles(t_game *cub)
@@ -90,11 +100,8 @@ void	validate_tiles(t_game *cub)
 		while (x < cub->map.width)
 		{
 			tile = cub->map.grid[y][x];
-			if (ft_strchr("NEWS0", tile))
-			{
-				if (has_invalid_neighbor(y, x, &cub->map))
-					error_exit(cub, "Map is invalid");
-			}
+			if (ft_strchr("NSWE0", tile))
+				check_neighbors(y, x, cub);
 			x++;
 		}
 		y++;

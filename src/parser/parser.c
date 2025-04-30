@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 19:13:57 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/28 14:40:57 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:22:34 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	parse_scene_file(char *file_name, t_game *cub)
 		free(line);
 		line = get_next_line(cub->map.fd);
 	}
+	close(cub->map.fd);
 	validate_map_lines(cub, cub->map.temp_list);
 	save_map_to_grid(cub);
 	validate_tiles(cub);
-	close(cub->map.fd);
 	check_struct(cub);
 }
