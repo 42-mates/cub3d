@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 19:48:01 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:20:18 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *check_syntax(char *trimmed, char *temp, int n)
 	return (NULL);
 }
 
-static int	parse_component(char *trimmed, t_game *cub, char **rgb, char *line)
+static int	parse_component(char *trimmed, t_game *cub, char **subs, char *line)
 {
 	char	*temp;
 	char	*msg;
@@ -37,7 +37,7 @@ static int	parse_component(char *trimmed, t_game *cub, char **rgb, char *line)
 		free(line);
 		free(temp);
 		free(trimmed);
-		free_tab(rgb);
+		free_tab(subs);
 		error_close_exit(cub, msg);
 	}
 	free(trimmed);
@@ -45,24 +45,15 @@ static int	parse_component(char *trimmed, t_game *cub, char **rgb, char *line)
 	return (n);
 }
 
-static int	convert_rgb(char *line, t_game *cub, char *tmp)
+static int	convert_rgb(t_game *cub, char **subs, char *line)
 {
-	char	**rgb;
 	int		r;
 	int		g;
 	int		b;
 
-	rgb = ft_split(line, ',');
-	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
-	{
-		free(tmp);
-		free_tab(rgb);
-		error_close_exit(cub, "RGB: need exactly three numbers");
-	}
-	r = parse_component(ft_strtrim(rgb[0], " "), cub, rgb, tmp);
-	g = parse_component(ft_strtrim(rgb[1], " "), cub, rgb, tmp);
-	b = parse_component(ft_strtrim(rgb[2], " "), cub, rgb, tmp);
-	free_tab(rgb);
+	r = parse_component(ft_strtrim(subs[0], " \t"), cub, subs, line);
+	g = parse_component(ft_strtrim(subs[1], " \t"), cub, subs, line);
+	b = parse_component(ft_strtrim(subs[2], " \t"), cub, subs, line);
 	return ((r << 16) | (g << 8) | b);
 }
 
@@ -70,16 +61,23 @@ int	parse_rgb_line(t_game *cub, char *line, int *dst)
 {
 	char	*tmp;
 	int		rgb;
+	char	**subs;
 
-	tmp = line;
 	if (*dst != -1)
 	{
-		free(tmp);
+		free(line);
 		error_close_exit(cub, "Duplicate configuration for color");
 	}
+	tmp = line;
 	++line;
-	while (*line && (*line == ' ' || *line == '\t'))
-		++line;
-	rgb = convert_rgb(line, cub, tmp);
+	subs = ft_split(line, ',');
+	if (!subs || !subs[0] || !subs[1] || !subs[2] || subs[3])
+	{
+		free_tab(subs);
+		free(tmp);
+		error_close_exit(cub, "RGB: need exactly three numbers");
+	}
+	rgb = convert_rgb(cub, subs, tmp);
+	free_tab(subs);
 	return (rgb);
 }
