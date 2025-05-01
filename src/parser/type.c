@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 20:26:12 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:33:04 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	is_map_line(char *line)
 
 	set = "10NSWE";
 	is_map_line = 0;
-	trimmed = ft_strtrim(line, " ");
+	trimmed = ft_strtrim(line, " \t");
 	if (ft_strchr(set, trimmed[0]))
 		is_map_line = 1;
 	free(trimmed);
 	return (is_map_line);
 }
 
-void	identify_line_type(char *line, t_game *cub, int *map_started, int *map_ended)
+void	classify_line(char *line, t_game *cub, int *map_started, int *map_ended)
 {
 	if (line_is_empty(line))
 	{
@@ -64,6 +64,6 @@ void	identify_line_type(char *line, t_game *cub, int *map_started, int *map_ende
 	else
 	{
 		free(line);
-		error_close_exit(cub, "Unexpected line in .cub file");
+		error_close_exit(cub, "Invalid line in .cub file");
 	}
 }

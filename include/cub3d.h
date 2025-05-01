@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/30 23:39:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:33:32 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void					error_close_exit(t_game *cub, char *msg);
 void					parse_scene_file(char *file_name, t_game *cub);
 int						is_config_line(char *trimmed);
 void					save_map_to_grid(t_game *cub);
-void					identify_line_type(char *line, t_game *cub,
+void					classify_line(char *line, t_game *cub,
 							int *map_started, int *map_ended);
 void					map_list_append(t_game *cub, char *line,
 							t_map_node **head);

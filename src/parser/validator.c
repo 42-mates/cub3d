@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:06:32 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 15:29:35 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:12:58 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	validate_map_lines(t_game *cub, t_map_node *head)
 	t_map_node	*current;
 	int			num_of_players;
 
+	if (!head)
+		error_exit(cub, "Missing configuration elements");
 	current = head;
 	num_of_players = 0;
 	while (current)
