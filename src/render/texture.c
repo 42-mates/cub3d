@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 23:51:20 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/05/01 20:51:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/05/02 00:39:45 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	get_tex_y(int y, int line_h, int tex_h)
 {
-	int	d;
-	int	tex_y;
+	int		start;
+	double	ratio;
+	int		tex_y;
 
-	d = y * 256 - WIN_HEIGHT * 128 + line_h * 128;
-	tex_y = (d * tex_h) / line_h;
-	tex_y = clamp_int(tex_y / 256, 0, tex_h - 1);
+	start = (WIN_HEIGHT - line_h) / 2;
+	ratio = (double)(y - start) / line_h;
+	tex_y = (int)(ratio * tex_h);
+	tex_y = clamp_int(tex_y, 0, tex_h - 1);
 	return (tex_y);
 }
 
