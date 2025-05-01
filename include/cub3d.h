@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:47:07 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/05/01 18:33:32 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:16:43 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ typedef struct s_image
 
 typedef struct s_tex
 {
-	t_image				*no;
-	t_image				*so;
-	t_image				*we;
-	t_image				*ea;
+	t_image				no;
+	t_image				so;
+	t_image				we;
+	t_image				ea;
 }						t_tex;
 
 typedef struct s_ray

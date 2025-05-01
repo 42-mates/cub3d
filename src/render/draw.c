@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:38:08 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/28 14:38:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:32:20 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	draw_wall(t_game *g, int x)
 	if (ray->side == 0)
 	{
 		if (ray->map_x > g->player.pos_x)
-			draw_column(g, g->tex.ea, x, line_h);
+			draw_column(g, &g->tex.ea, x, line_h);
 		else
-			draw_column(g, g->tex.we, x, line_h);
+			draw_column(g, &g->tex.we, x, line_h);
 	}
 	else
 	{
 		if (ray->map_y > g->player.pos_y)
-			draw_column(g, g->tex.so, x, line_h);
+			draw_column(g, &g->tex.so, x, line_h);
 		else
-			draw_column(g, g->tex.no, x, line_h);
+			draw_column(g, &g->tex.no, x, line_h);
 	}
 }

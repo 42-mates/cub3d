@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/05/01 19:16:45 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:33:02 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 	check_args(argc, argv);
 	init_game(&cub);
 	parse_scene_file(argv[1], &cub);
-	print_data(&cub);
+	// print_data(&cub);
 	init_window(&cub, WIN_TITLE);
 	get_player_position(&cub);
 	render_frame(&cub);

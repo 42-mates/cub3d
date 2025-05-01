@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 23:51:20 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/30 23:47:35 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:51:27 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,45 +42,22 @@ int	get_tex_x(t_ray *ray, t_image *wall, t_player *player)
 	return (tex_x);
 }
 
-static void	check_texture_size(t_game *cub, t_image *tex)
+void load_texture(t_game *cub, t_image *tex, char *path)
 {
-	if (tex->w > MAX_TEX || tex->h > MAX_TEX)
-	{
-		mlx_destroy_image(cub->mlx, tex->img);
-		free(tex);
-		error_exit(cub, "Texture too large (max 800x800)");
-	}
-}
-
-static t_image	*load_texture(t_game *cub, char *path)
-{
-	t_image	*tex;
-
-	tex = malloc(sizeof(t_image));
-	if (!tex)
-		error_exit(cub, "Malloc failed in load_texture");
 	tex->img = mlx_xpm_file_to_image(cub->mlx, path, &tex->w, &tex->h);
 	if (!tex->img)
-	{
-		free(tex);
-		error_exit(cub, "Failed to load texture");
-	}
-	check_texture_size(cub, tex);
-	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len,
-			&tex->endian);
+		error_exit(cub, "Texture load failed");
+	if (tex->w > MAX_TEX || tex->h > MAX_TEX)
+		error_exit(cub, "Texture too large (max 800x800)");
+	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->addr)
-	{
-		mlx_destroy_image(cub->mlx, tex->img);
-		free(tex);
-		error_exit(cub, "Failed to get texture data address");
-	}
-	return (tex);
+		error_exit(cub, "Get texture addr failed");
 }
 
 void	load_textures(t_game *cub)
 {
-	cub->tex.no = load_texture(cub, cub->map.no_texture);
-	cub->tex.so = load_texture(cub, cub->map.so_texture);
-	cub->tex.we = load_texture(cub, cub->map.we_texture);
-	cub->tex.ea = load_texture(cub, cub->map.ea_texture);
+	load_texture(cub, &cub->tex.no, cub->map.no_texture);
+	load_texture(cub, &cub->tex.so, cub->map.so_texture);
+	load_texture(cub, &cub->tex.we, cub->map.we_texture);
+	load_texture(cub, &cub->tex.ea, cub->map.ea_texture);
 }
