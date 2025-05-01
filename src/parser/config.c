@@ -6,7 +6,7 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:41:30 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/05/01 19:50:00 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:11:52 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,23 @@ void	extract_path(char *line, char **dst, t_game *cub)
 
 void	parse_config(char *line, t_game *cub)
 {
-	char	*tmp;
-
-	tmp = line;
 	while (*line && (*line == ' ' || *line == '\t'))
 		++line;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		extract_path(tmp, &cub->map.no_texture, cub);
+		extract_path(line, &cub->map.no_texture, cub);
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		extract_path(tmp, &cub->map.so_texture, cub);
+		extract_path(line, &cub->map.so_texture, cub);
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		extract_path(tmp, &cub->map.we_texture, cub);
+		extract_path(line, &cub->map.we_texture, cub);
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		extract_path(tmp, &cub->map.ea_texture, cub);
+		extract_path(line, &cub->map.ea_texture, cub);
 	else if (ft_strncmp(line, "F ", 2) == 0)
-		cub->map.floor_rgb = parse_rgb_line(cub, tmp, &cub->map.floor_rgb);
-	else if (ft_strncmp(tmp, "C ", 2) == 0)
-		cub->map.ceiling_rgb = parse_rgb_line(cub, tmp, &cub->map.ceiling_rgb);
+		cub->map.floor_rgb = parse_rgb_line(cub, line, &cub->map.floor_rgb);
+	else if (ft_strncmp(line, "C ", 2) == 0)
+		cub->map.ceiling_rgb = parse_rgb_line(cub, line, &cub->map.ceiling_rgb);
 	else
 	{
-		free(tmp);
+		free(line);
 		error_close_exit(cub, "Invalid line in .cub file");
 	}
 }
