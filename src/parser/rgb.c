@@ -6,42 +6,48 @@
 /*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 22:57:56 by mglikenf          #+#    #+#             */
-/*   Updated: 2025/04/30 23:20:18 by mglikenf         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:46:43 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char *check_syntax(char *trimmed, char *temp, int n)
+static char *check_syntax(char *trimmed, int n)
 {
-	if (ft_strchr(trimmed, '+'))
-		return ("'+' symbol in RGB values is rejected");
-	if (ft_strcmp(trimmed, temp) || ft_strchr(trimmed, '-'))
-		return ("RGB values must be positive integers (0-255)");
-	if (n > 255)
-		return ("RGB value out of range 0-255");
+	int i = 0;
+
+	if (n < 0 || n > 255)
+		return ("RGB value must be in range 0-255");
+	while (trimmed[i] == ' ' || trimmed[i] == '\t')
+		i++;
+	if (trimmed[i] == '+' || trimmed[i] == '-')
+		i++;
+	if (!ft_isdigit(trimmed[i]))
+		return ("RGB format is invalid");
+	while (ft_isdigit(trimmed[i]))
+		i++;
+	while (trimmed[i] == ' ' || trimmed[i] == '\t')
+		i++;
+	if (trimmed[i] != '\0')
+		return ("RGB format is invalid");
 	return (NULL);
 }
 
-static int	parse_component(char *trimmed, t_game *cub, char **subs, char *line)
+static int parse_component(char *trimmed, t_game *cub, char **subs, char *line)
 {
-	char	*temp;
 	char	*msg;
 	int		n;
 
 	n = ft_atoi(trimmed);
-	temp = ft_itoa(n);
-	msg = check_syntax(trimmed, temp, n);
+	msg = check_syntax(trimmed, n);
 	if (msg != NULL)
 	{
 		free(line);
-		free(temp);
 		free(trimmed);
 		free_tab(subs);
 		error_close_exit(cub, msg);
 	}
 	free(trimmed);
-	free(temp);
 	return (n);
 }
 
