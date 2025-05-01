@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mglikenf <mglikenf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 20:42:38 by oprosvir          #+#    #+#             */
-/*   Updated: 2025/04/29 22:45:32 by oprosvir         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:16:45 by mglikenf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,17 @@ static void	check_args(int argc, char **argv)
 {
 	char	*s;
 	int		fd;
+	char	*filename;
 
 	if (argc != 2)
 		exit_failure("Invalid number of arguments");
+	filename = ft_strrchr(argv[1], '/');
+	if (filename)
+		filename++;
+	else
+		filename = argv[1];
+	if (filename[0] == '.')
+		exit_failure("Hidden .cub files are not allowed");
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || read(fd, NULL, 0) < 0)
 	{
