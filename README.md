@@ -1,6 +1,6 @@
 ## cub3d
 ```
-FINAL GRADE: -/100
+FINAL GRADE: 115/100
 ```
 Made by [@prosviriakova](https://github.com/prosviriakova) and [@mglikenf](https://github.com/mglikenf).
 
@@ -40,4 +40,22 @@ git submodule update --init --recursive
 - ❌ Doors that can open and close.
 - ❌ Animated sprites.
 
-### 📸 Project Gallery
+### 🖼️ Map Previews
+
+<p align="center">
+  <img src="assets/backroom.cub.png" width="45%" />
+  <img src="assets/brainrot.cub.png" width="45%" />
+</p>
+<p align="center">
+  <img src="assets/campus.cub.png" width="45%" />
+  <img src="assets/castle.cub.png" width="45%" />
+</p>
+<p align="center">
+  <img src="assets/forest.cub.png" width="45%" />
+  <img src="assets/mario.cub.png" width="45%" />
+</p>
+<p align="center">
+  <img src="assets/subject.cub.png" width="45%" />
+  <img src="assets/maze.cub.png" width="45%" />
+</p>
+
